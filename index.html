@@ -27,7 +27,8 @@
         .logo span { color: var(--neon-gold); }
         #google_translate_element { background: rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 8px; }
 
-        .edit-mode-active .editable { border: 2.5px dashed var(--coral-flor)!important; cursor: pointer; position: relative; animation: titilar 1.5s infinite; }
+        /* Estilo visual interactivo para los elementos editables en Modo Propietario */
+        .edit-mode-active .editable { border: 2.5px dashed var(--coral-flor)!important; padding: 4px; background-color: var(--gris-editable); cursor: text; position: relative; animation: titilar 1.5s infinite; color: #2c3e50 !important; }
         @keyframes titilar { 0% { border-color: var(--coral-flor); } 50% { border-color: var(--neon-gold); } 100% { border-color: var(--coral-flor); } }
 
         .badge-fundacion {
@@ -42,7 +43,7 @@
         #hero-pitch {
             height: 65vh;
             background: linear-gradient(rgba(7, 25, 16, 0.7), rgba(7, 25, 16, 0.5)), 
-                        url('https://scis.ai') no-repeat center center/cover;
+                        url('https://unsplash.com') no-repeat center center/cover;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white); padding: 0 20px;
         }
         #hero-pitch h1 { color: var(--white); font-size: 45px; text-transform: uppercase; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); margin-bottom: 15px; }
@@ -85,71 +86,49 @@
     </style>
 </head>
 <body>
-    <div id="status-bar">MODO PROPIETARIO ACTIVO: Haz clic sobre cualquier cuadro rojo para cambiar su texto</div>
-    <header id="main-header"><nav><div class="logo">The Bunker | <span>Wix Style Portal</span></div><div id="google_translate_element"></div></nav></header>
+    <div id="status-bar">MODO PROPIETARIO ACTIVO: Haz clic sobre cualquier cuadro marcado para cambiar su texto directamente</div>
+    
+    <header id="main-header">
+        <nav>
+            <div class="logo">The Bunker | <span>Wix Style Portal</span></div>
+            <div id="google_translate_element"></div>
+        </nav>
+    </header>
     
     <div class="badge-fundacion">
-        <h4 class="editable" id="f-t1" onclick="editarTextoForm(this)">Eco-Investment & Fund</h4>
-        <p class="editable" id="f-d1" onclick="editarTextoForm(this)">Propuesta activa para inversionistas internacionales. Proyecto de ecoturismo autosustentable con protección de biodiversidad nativa activa en la Comarca Ngäbe-Buglé.</p>
+        <h4 class="editable" id="f-t1">Eco-Investment & Fund</h4>
+        <p class="editable" id="f-d1">Propuesta activa para inversionistas internacionales. Proyecto de ecoturismo autosustentable con protección de biodiversidad nativa activa en la Comarca Ngäbe-Buglé.</p>
     </div>
 
+    <!-- SECCIÓN HERO PITCH -->
     <section id="hero-pitch">
-        <h1 class="editable" id="p-title" onclick="editarTextoForm(this)">THE BUNKER Restaurante & Hostal</h1>
-        <p class="editable" id="p-sub" onclick="editarTextoForm(this)">Explora nuestro catálogo oficial de servicios gastronómicos, áreas Overland car camping y turismo activo en Willy Mazue, Bürí.</p>
+        <h1 class="editable" id="p-title">THE BUNKER Restaurante & Hostal</h1>
+        <p class="editable" id="p-sub">Explora nuestro catálogo oficial de servicios gastronómicos, áreas Overland car camping y turismo activo en Willy Mazue, Bürí.</p>
         <button class="btn-action" onclick="abrirWSRDirecto('General')">💬 Conectar por WhatsApp</button>
     </section>
 
     <!-- SECCIÓN DE HOSPEDAJE EXCLUSIVA DE THE BUNKER -->
     <section id="hospedaje">
-        <!-- El contenido estructural interno puede continuar aquí -->
-  <!-- SECCIÓN DE HOSPEDAJE EXCLUSIVA DE THE BUNKER -->
-    <section id="hospedaje">
-        <h2 class="section-title">Nuestras Opciones de Hospedaje</h2>
-        <p class="section-subtitle">Elige la experiencia que mejor se adapte a tu espíritu aventurero en Bürí.</p>
+        <h2 class="section-title editable" id="hosp-title">Nuestras Opciones de Hospedaje</h2>
+        <p class="section-subtitle editable" id="hosp-subtitle">Elige la experiencia que mejor se adapte a tu espíritu aventurero en Bürí.</p>
         
         <div class="grid">
-            <!-- Tarjeta 1: Overland & Car Camping -->
+            <!-- Tarjeta 1 -->
             <div class="card">
                 <div class="card-img" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4)), url('https://unsplash.com');">
                     <span class="card-badge">Overland</span>
                 </div>
                 <div class="card-content">
                     <div>
-                        <h3>Zonas Car Camping</h3>
-                        <p>Espacios equipados para vehículos 4x4 y tiendas de techo. Conexión directa con la naturaleza de Willy Mazue y acceso a servicios comunales.</p>
+                        <h3 class="editable" id="c1-title">Zonas Car Camping</h3>
+                        <p class="editable" id="c1-desc">Espacios equipados para vehículos 4x4 y tiendas de techo. Conexión directa con la naturaleza de Willy Mazue y acceso a servicios comunales.</p>
                     </div>
                     <button class="btn-action" style="margin-top: 20px; width: 100%;" onclick="abrirWSRDirecto('Camping')">Reservar Espacio</button>
                 </div>
             </div>
 
-            <!-- Tarjeta 2: Hostal Ecológico -->
+            <!-- Tarjeta 2 -->
             <div class="card">
                 <div class="card-img" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4)), url('https://unsplash.com');">
                     <span class="card-badge">Eco Hostal</span>
                 </div>
-                <div class="card-content">
-                    <div>
-                        <h3>Habitaciones Compartidas</h3>
-                        <p>Diseño rústico y sostenible con ventilación natural. Perfecto para mochileros y viajeros que buscan compartir historias y aventuras.</p>
-                    </div>
-                    <button class="btn-action" style="margin-top: 20px; width: 100%;" onclick="abrirWSRDirecto('Hostal')">Ver Disponibilidad</button>
-                </div>
-            </div>
-
-            <!-- Tarjeta 3: Cabañas Privadas -->
-            <div class="card">
-                <div class="card-img" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.4)), url('https://unsplash.com');">
-                    <span class="card-badge">Premium</span>
-                </div>
-                <div class="card-content">
-                    <div>
-                        <h3>Cabañas del Bosque</h3>
-                        <p>Privacidad total con vistas panorámicas a la biodiversidad nativa de la Comarca. Confort eco-amigable para un descanso profundo.</p>
-                    </div>
-                    <button class="btn-action" style="margin-top: 20px; width: 100%;" onclick="abrirWSRDirecto('Cabana')">Reservar Cabaña</button>
-                </div>
-            </div>
-        </div>
-    </section>   </section>
-</body>
-</html>

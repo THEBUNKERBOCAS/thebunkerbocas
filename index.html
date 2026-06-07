@@ -5,17 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Bunker - Hospedaje y Aventura en Bürí</title>
     <link rel="stylesheet" href="estilos.css">
+    <style>
+        /* Estilos base incrustados para el control visual del Modo CMS */
+        .bunker-modificando {
+            border: 2px dashed #e74c3c !important;
+            padding: 4px;
+            background-color: #fffdf0;
+            cursor: text;
+            border-radius: 6px;
+        }
+        .bunker-multimedia-activa {
+            border: 3px dashed #f1c40f !important;
+            cursor: pointer;
+            opacity: 0.85;
+        }
+        #panel-admin-bunker {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 9999;
+            font-family: Arial, sans-serif;
+        }
+        #btn-login-bunker, .btn-guardar-bunker, .btn-salir-bunker {
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        #btn-login-bunker { background-color: #0b2216; color: white; }
+        .btn-guardar-bunker { background-color: #1abc9c; color: white; margin-right: 8px; }
+        .btn-salir-bunker { background-color: #7f8c8d; color: white; }
+        #controles-edicion-bunker {
+            background: rgba(11, 34, 22, 0.95);
+            padding: 15px;
+            border-radius: 15px;
+            align-items: center;
+            border: 1px solid #1abc9c;
+        }
+        .estado-edicion { color: white; margin-right: 15px; font-size: 13px; font-weight: bold; }
+    </style>
 </head>
 <body>
 
     <!-- Menú de Navegación Fijo Superior -->
     <nav class="menu-fijo">
         <div class="menu-contenedor">
-            <a href="#" class="menu-logo editable">The Bunker</a>
+            <a href="#" class="menu-logo editable" id="txt-logo">The Bunker</a>
             <ul class="menu-enlaces">
-                <li><a href="#servicios" class="editable">Servicios</a></li>
-                <li><a href="#actividades" class="editable">Experiencias</a></li>
-                <li><a href="#contacto" class="editable">Contacto</a></li>
+                <li><a href="#servicios" class="editable" id="txt-nav-serv">Servicios</a></li>
+                <li><a href="#actividades" class="editable" id="txt-nav-exp">Experiencias</a></li>
+                <li><a href="#contacto" class="editable" id="txt-nav-cont">Contacto</a></li>
             </ul>
         </div>
     </nav>
@@ -23,8 +64,8 @@
     <!-- Encabezado / Hero Section -->
     <header class="hero">
         <div class="hero-contenido">
-            <h1 class="editable">The Bunker</h1>
-            <p class="editable">Tu refugio de aventura y desconexión total en Bürí</p>
+            <h1 class="editable" id="txt-hero-title">The Bunker</h1>
+            <p class="editable" id="txt-hero-sub">Tu refugio de aventura y desconexión total en Bürí</p>
             <div class="botones-contacto">
                 <a href="https://wa.me" target="_blank" class="btn-principal">Reservar por WhatsApp 1</a>
                 <a href="https://wa.me" target="_blank" class="btn-secundario">Reservar por WhatsApp 2</a>
@@ -37,48 +78,48 @@
         
         <!-- Hostal y Restaurante -->
         <section id="servicios">
-            <h2 class="titulo-seccion editable">Nuestros Servicios</h2>
+            <h2 class="titulo-seccion editable" id="txt-serv-title">Nuestros Servicios</h2>
             <div class="grid-servicios">
                 <div class="tarjeta-servicio">
-                    <img src="https://unsplash.com" alt="Hostal The Bunker" class="editable-media">
-                    <h3 class="editable">Hostal</h3>
-                    <p class="editable">Habitaciones cómodas y un ambiente diseñado para el descanso de los viajeros y aventureros.</p>
+                    <img src="https://unsplash.com" alt="Hostal The Bunker" class="editable-media" id="media-hostal">
+                    <h3 class="editable" id="txt-serv-h1">Hostal</h3>
+                    <p class="editable" id="txt-serv-p1">Habitaciones cómodas y un ambiente diseñado para el descanso de los viajeros y aventureros.</p>
                 </div>
                 <div class="tarjeta-servicio">
-                    <img src="https://unsplash.com" alt="Restaurante El Bunker" class="editable-media">
-                    <h3 class="editable">Restaurante</h3>
-                    <p class="editable">Deliciosos platillos locales y comida casera para reponer energías después de un día de exploración.</p>
+                    <img src="https://unsplash.com" alt="Restaurante El Bunker" class="editable-media" id="media-rest">
+                    <h3 class="editable" id="txt-serv-h2">Restaurante</h3>
+                    <p class="editable" id="txt-serv-p2">Deliciosos platillos locales y comida casera para reponer energías después de un día de exploración.</p>
                 </div>
             </div>
         </section>
 
         <!-- Actividades de Aventura -->
         <section id="actividades">
-            <h2 class="titulo-seccion editable">Experiencias y Naturaleza</h2>
+            <h2 class="titulo-seccion editable" id="txt-act-title">Experiencias y Naturaleza</h2>
             <div class="grid-actividades">
                 
                 <div class="item-actividad">
-                    <div class="icono-actividad editable">🦜</div>
-                    <h4 class="editable">Avistamiento de Aves</h4>
-                    <p class="editable">Explora la increíble biodiversidad de aves exóticas y nativas de la región de Bürí.</p>
+                    <div class="icono-actividad editable" id="txt-act-ico1">🦜</div>
+                    <h4 class="editable" id="txt-act-h1">Avistamiento de Aves</h4>
+                    <p class="editable" id="txt-act-p1">Explora la increíble biodiversidad de aves exóticas y nativas de la región de Bürí.</p>
                 </div>
 
                 <div class="item-actividad">
-                    <div class="icono-actividad editable">🌊</div>
-                    <h4 class="editable">Río</h4>
-                    <p class="editable">Refréscate en las aguas cristalinas del río a solo unos pasos de nuestras instalaciones.</p>
+                    <div class="icono-actividad editable" id="txt-act-ico2">🌊</div>
+                    <h4 class="editable" id="txt-act-h2">Río</h4>
+                    <p class="editable" id="txt-act-p2">Refréscate en las aguas cristalinas del río a solo unos pasos de nuestras instalaciones.</p>
                 </div>
 
                 <div class="item-actividad">
-                    <div class="icono-actividad editable">🥾</div>
-                    <h4 class="editable">Senderismo</h4>
-                    <p class="editable">Rutas guiadas y senderos diseñados para los amantes de los retos y la montaña profunda.</p>
+                    <div class="icono-actividad editable" id="txt-act-ico3">🥾</div>
+                    <h4 class="editable" id="txt-act-h3">Senderismo</h4>
+                    <p class="editable" id="txt-act-p3">Rutas guiadas y senderos diseñados para los amantes de los retos y la montaña profunda.</p>
                 </div>
 
                 <div class="item-actividad">
-                    <div class="icono-actividad editable">🚶‍♂️</div>
-                    <h4 class="editable">Caminatas</h4>
-                    <p class="editable">Paseos tranquilos ideales para conectar con el entorno rural y capturar paisajes únicos.</p>
+                    <div class="icono-actividad editable" id="txt-act-ico4">🚶‍♂️</div>
+                    <h4 class="editable" id="txt-act-h4">Caminatas</h4>
+                    <p class="editable" id="txt-act-p4">Paseos tranquilos ideales para conectar con el entorno rural y capturar paisajes únicos.</p>
                 </div>
 
             </div>
@@ -88,8 +129,8 @@
 
     <!-- Pie de página / Contacto -->
     <footer id="contacto">
-        <p class="editable">&copy; 2026 The Bunker - Bürí, Panamá. Todos los derechos reservados.</p>
-        <p class="editable">Contactos directos: +507 6437-4561 | +507 6652-7730</p>
+        <p class="editable" id="txt-foot-copy">&copy; 2026 The Bunker - Bürí, Panamá. Todos los derechos reservados.</p>
+        <p class="editable" id="txt-foot-tels">Contactos directos: +507 6437-4561 | +507 6652-7730</p>
     </footer>
 
     <!-- Botones de WhatsApp Flotantes -->
@@ -108,8 +149,24 @@
         </div>
     </div>
 
+    <!-- SCRIPT DE INTERACTIVIDAD Y PERSISTENCIA -->
     <script>
         let modoEdicionActivo = false;
+
+        // Carga automática del LocalStorage al inicializar la ventana del navegador
+        window.addEventListener("DOMContentLoaded", () => {
+            const textos = document.querySelectorAll('.editable');
+            textos.forEach(el => {
+                const guardado = localStorage.getItem("bunkercms_text_" + el.id);
+                if (guardado) el.innerHTML = guardado;
+            });
+
+            const medios = document.querySelectorAll('.editable-media');
+            medios.forEach(media => {
+                const guardadoMedia = localStorage.getItem("bunkercms_media_" + media.id);
+                if (guardadoMedia) media.src = guardadoMedia;
+            });
+        });
 
         function autenticarBunker() {
             const password = prompt("Introduce la llave de acceso para editar The Bunker:");
@@ -158,27 +215,4 @@
         }
 
         function guardarCambiosBunker() {
-            activarEdicion(false);
-
-            const clonDoc = document.documentElement.cloneNode(true);
-            const panel = clonDoc.querySelector('#panel-admin-bunker');
-            if (panel) panel.remove();
-
-            clonDoc.querySelectorAll('.editable-media').forEach(el => el.removeAttribute('onclick'));
-
-            const htmlCompleto = "<!DOCTYPE html>\n<html lang=\"es\">" + clonDoc.innerHTML + "</html>";
-            const blob = new Blob([htmlCompleto], { type: 'text/html' });
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'index.html';
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            alert("💾 Archivo 'index.html' descargado con éxito. Reemplázalo en tu carpeta.");
-            activarEdicion(true);
-        }
-    </script>
-</body>
-</html>
+            // Guardar el estado actual en el motor de LocalStorage

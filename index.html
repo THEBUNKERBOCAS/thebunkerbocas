@@ -1,223 +1,194 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Bunker | Hostal, Restaurante y Ecoturismo en Bürí</title>
+    <title>The Bunker | Premium Eco-Investment Opportunity</title>
     <style>
         :root {
-            --verde-selva: #0b2216;
-            --verde-hoja: #1e5935;
-            --neon-selva: #1abc9c;
-            --coral-flor: #e74c3c;
-            --amarillo-sol: #f1c40f;
-            --azul-rio: #3498db;
-            --magenta-mariposa: #9b59b6;
-            --blanco: #ffffff;
-            --fondo-ecologico: #f4fbf7;
-            --gris-editable: #fffdf0;
+            --jungle-dark: #071910;
+            --emerald: #104c32;
+            --neon-gold: #f1c40f;
+            --clean-turq: #1abc9c;
+            --accent-coral: #e74c3c;
+            --white: #ffffff;
+            --bg-light: #f5fcf8;
+            --owner-gold: #fffdf0;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { color: #2c3e50; background-color: var(--fondo-ecologico); line-height: 1.6; padding-top: 70px; }
-        h1, h2, h3 { color: var(--verde-selva); font-weight: 700; }
+        body { color: #2c3e50; background-color: var(--bg-light); line-height: 1.6; padding-top: 70px; }
+        h1, h2, h3 { color: var(--jungle-dark); font-weight: 700; }
 
-        #status-bar { background-color: var(--coral-flor); color: white; text-align: center; padding: 10px; font-weight: bold; position: fixed; top: 0; width: 100%; z-index: 2500; display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        header { background-color: var(--verde-selva); position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        #status-bar { background-color: var(--accent-coral); color: white; text-align: center; padding: 10px; font-weight: bold; position: fixed; top: 0; width: 100%; z-index: 2500; display: none; }
+        header { background-color: var(--jungle-dark); position: fixed; width: 100%; top: 0; z-index: 1000; border-bottom: 2px solid var(--clean-turq); }
         nav { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; padding: 15px 20px; }
-        .logo { color: var(--white); font-size: 26px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: white; }
-        .logo span { color: var(--neon-selva); }
+        .logo { color: var(--white); font-size: 24px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .logo span { color: var(--neon-gold); }
         #google_translate_element { background: rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 8px; }
 
-        .edit-mode-active .editable { background-color: var(--gris-editable) !important; color: #111111 !important; border: 2.5px dashed var(--coral-flor) !important; padding: 4px; border-radius: 6px; cursor: pointer; }
+        .edit-mode-active .editable { border: 2px dashed var(--accent-coral)!important; cursor: pointer; position: relative; animation: flashBorder 1.5s infinite; }
+        @keyframes flashBorder { 0% { border-color: var(--accent-coral); } 50% { border-color: var(--neon-gold); } 100% { border-color: var(--accent-coral); } }
 
-        /* TARJETA DE FUNDACIÓN EN LA ESQUINA SUPERIOR */
         .badge-fundacion {
-            background: rgba(11, 34, 22, 0.95); border: 2px solid var(--neon-selva);
-            padding: 15px; border-radius: 20px; color: white; max-width: 260px;
+            background: rgba(7, 25, 16, 0.95); border: 2px solid var(--clean-turq);
+            padding: 12px 18px; border-radius: 20px; color: white; max-width: 280px;
             position: fixed; top: 95px; right: 20px; z-index: 999;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
         }
-        .badge-fundacion h4 { color: var(--neon-selva); font-size: 13px; text-transform: uppercase; margin-bottom: 5px; }
+        .badge-fundacion h4 { color: var(--clean-turq); font-size: 13px; text-transform: uppercase; margin-bottom: 3px; font-weight: 800; }
         .badge-fundacion p { font-size: 11.5px; line-height: 1.4; color: #cbd5e1; }
 
-        #inicio {
-            height: 65vh;
-            background: linear-gradient(rgba(11, 34, 22, 0.65), rgba(11, 34, 22, 0.45)), 
+        #hero-pitch {
+            height: 75vh;
+            background: linear-gradient(rgba(7, 25, 16, 0.75), rgba(7, 25, 16, 0.55)), 
                         url('https://scis.ai') no-repeat center center/cover;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; padding: 0 20px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white); padding: 0 20px;
         }
-        #inicio h1 { color: white; font-size: 48px; margin-bottom: 15px; text-transform: uppercase; text-shadow: 2px 2px 8px rgba(0,0,0,0.5); }
-        #inicio p { font-size: 20px; max-width: 800px; margin-bottom: 25px; text-shadow: 1px 1px 4px rgba(0,0,0,0.5); }
+        #hero-pitch h1 { color: var(--white); font-size: 50px; text-transform: uppercase; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); margin-bottom: 15px; }
+        #hero-pitch p { font-size: 22px; max-width: 850px; text-shadow: 1px 1px 5px rgba(0,0,0,0.6); margin-bottom: 30px; font-weight: 300; }
+        
+        .btn-action { display: inline-block; background-color: var(--neon-gold); color: var(--jungle-dark); padding: 14px 35px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 16px; box-shadow: 0 4px 15px rgba(241,196,15,0.4); text-transform: uppercase; transition: transform 0.2s; border: none; cursor: pointer; }
+        .btn-action:hover { transform: scale(1.03); }
 
-        .btn-ws { display: inline-block; background-color: #25d366; color: white; padding: 14px 35px; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(37,211,102,0.4); text-transform: uppercase; }
+        .metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; max-width: 1200px; margin: -50px auto 40px; padding: 0 20px; position: relative; z-index: 10; }
+        .metric-card { background: var(--white); padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(7,25,16,0.08); border-bottom: 4px solid var(--clean-turq); }
+        .metric-card h3 { font-size: 36px; color: var(--emerald); margin-bottom: 5px; }
+        .metric-card p { font-size: 14px; text-transform: uppercase; font-weight: bold; color: #7f8c8d; }
 
-        section { padding: 70px 20px; max-width: 1200px; margin: 0 auto; }
-        .section-bg-selva { background-color: #eef7f2; max-width: 100%; padding: 70px 0; }
-        .section-title { text-align: center; font-size: 36px; margin-bottom: 40px; text-transform: uppercase; color: var(--verde-selva); }
-        .section-title::after { content: '🌿'; display: block; font-size: 20px; margin-top: 5px; }
+        section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 36px; margin-bottom: 15px; text-transform: uppercase; color: var(--jungle-dark); }
+        .section-subtitle { text-align: center; font-size: 18px; color: #7f8c8d; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
+        .card { background: var(--white); border-radius: 24px; overflow: hidden; box-shadow: 0 8px 25px rgba(7,25,16,0.04); display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.02); }
+        .card-img { height: 260px; background-size: cover; background-position: center; position: relative; }
+        .card-badge { position: absolute; top: 15px; left: 15px; background: var(--emerald); color: white; padding: 6px 14px; border-radius: 30px; font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        .card-content { padding: 30px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-content h3 { margin-bottom: 12px; font-size: 24px; color: var(--emerald); }
+        .card-content p { color: #5a6c7d; font-size: 16px; line-height: 1.6; }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; padding: 0 20px; }
-        .card { background-color: white; border-radius: 20px; overflow: hidden; box-shadow: 0 6px 20px rgba(11,34,22,0.04); display: flex; flex-direction: column; border: 1px solid rgba(0,0,0,0.02); }
-        .card-img { height: 240px; background-size: cover; background-position: center; }
-        .card-content { padding: 30px; flex-grow: 1; }
-        .card-content h3 { margin-bottom: 12px; font-size: 23px; color: var(--verde-selva); }
-        .card-content p { color: #4a5568; font-size: 16px; }
-
-        .seccion-resenas { max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        .formulario-opiniones { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); margin-bottom: 35px; }
-        .form-grupo { margin-bottom: 15px; display: flex; flex-direction: column; }
-        .form-grupo label { font-weight: bold; margin-bottom: 5px; }
-        .form-grupo input, .form-grupo textarea, .form-grupo select { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 16px; outline: none; }
-        .lista-resenas { display: flex; flex-direction: column; gap: 20px; }
-        .resena-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.01); border-left: 6px solid var(--neon-selva); }
-        .resena-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: bold; }
-
+        .trail-logo-container { text-align: center; margin: 40px 0 10px; }
+        .trail-logo { max-width: 180px; height: auto; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .mapa-contenedor { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-        .mapa-box { width: 100%; height: 400px; border-radius: 25px; overflow: hidden; box-shadow: 0 12px 30px rgba(11, 34, 22, 0.12); border: 4px solid var(--verde-selva); }
+        .mapa-box { width: 100%; height: 400px; border-radius: 25px; overflow: hidden; box-shadow: 0 12px 30px rgba(7, 25, 16, 0.15); border: 4px solid var(--jungle-dark); }
 
-        footer { background-color: #05140d; color: #799487; text-align: center; padding: 50px 20px; margin-top: 60px; border-top: 3px solid var(--verde-selva); }
-        .panel-admin { margin-top: 25px; border-top: 1px solid #143023; padding-top: 20px; }
+        footer { background-color: var(--jungle-dark); color: #8fa399; text-align: center; padding: 50px 20px; margin-top: 60px; border-top: 4px solid var(--emerald); }
+        .panel-admin { margin-top: 25px; }
         .btn-admin { background: transparent; border: 1px solid #586e62; color: #879b90; padding: 8px 22px; border-radius: 30px; cursor: pointer; font-weight: 600; font-size: 14px; }
-        .btn-admin:hover { background: var(--coral-flor); color: white; border-color: var(--coral-flor); }
+        .btn-admin:hover { background: var(--accent-coral); color: white; }
+        @media (max-width: 768px) { #hero-pitch h1 { font-size: 32px; } .grid { padding: 0; } .badge-fundacion { position: static; max-width: 100%; margin: 20px; text-align: center; } }
     </style>
 </head>
 <body>
-    <div id="status-bar">MODO PROPIETARIO ACTIVO: Haz clic sobre cualquier cuadro rojo para cambiar su texto</div>
+    <div id="status-bar">INVESTOR DASHBOARD EDIT MODE ACTIVE: Click on red boxes to update financial projections or texts</div>
+    <header id="main-header"><nav><div class="logo">The Bunker | <span>Eco-Invest</span></div><div id="google_translate_element"></div></nav></header>
     
-    <!-- ESQUINA: MÓDULO DE INFORMACIÓN DE INVERSIÓN Y FUNDACIÓN -->
     <div class="badge-fundacion">
-        <h4 class="editable" id="f-t1">Eco-Investment & Fund</h4>
-        <p class="editable" id="f-d1">Propuesta para inversionistas internacionales. Proyecto autosustentable con protección de biodiversidad nativa activa en la Comarca Ngäbe-Buglé.</p>
+        <h4 class="editable" id="f-t1" onclick="editarTextoForm(this)">Eco-Investment & Fund</h4>
+        <p class="editable" id="f-d1" onclick="editarTextoForm(this)">Propuesta activa para inversionistas internacionales. Proyecto de ecoturismo autosustentable con protección de biodiversidad nativa en la Comarca Ngäbe-Buglé.</p>
     </div>
 
-    <header id="main-header"><nav><div class="logo">The <span>Bunker</span></div><div id="google_translate_element"></div></nav></header>
-
-    <section id="inicio">
-        <h1 class="editable" id="t-p-principal">Bienvenidos a The Bunker</h1>
-        <p class="editable" id="t-p-sub">Tu refugio natural en Bürí, Bocas del Toro. Descubre la combinación perfecta entre la hospitalidad y la salvaje belleza de la selva panameña.</p>
-        <a href="https://wa.me" target="_blank" class="btn-ws">💬 Reservar por WhatsApp</a>
+    <section id="hero-pitch">
+        <h1 class="editable" id="p-title">The Next Big Eco-Tourism Frontier in Panama</h1>
+        <p class="editable" id="p-sub">Invest in an active, fully scalable Eco-Hostal, Organic Restaurant, and the premier Overland Car Camping Hub located in the untouched paradise of Willy Mazue, Bürí.</p>
+        <button class="btn-action" onclick="abrirWSRDirecto('General')">💼 Contact Founder via WhatsApp</button>
     </section>
-    <!-- SECCIÓN DE INFRAESTRUCTURA DEL HOSTAL -->
-    <section id="hospedaje">
-        <h2 class="section-title">Hospedaje & Estadías</h2>
+
+    <div class="metric-grid">
+        <div class="metric-card">
+            <h3 class="editable" id="m1">100%</h3>
+            <p class="editable" id="ml1">Active Operations</p>
+        </div>
+        <div class="metric-card">
+            <h3 class="editable" id="m2">Overland</h3>
+            <p class="editable" id="ml2">High-Growth Niche</p>
+        </div>
+        <div class="metric-card">
+            <h3 class="editable" id="m3">Bürí</h3>
+            <p class="editable" id="ml3">Strategic Location</p>
+        </div>
+    </div>    <section id="opportunity">
+        <h2 class="section-title">The Investment Opportunity</h2>
+        <p class="section-subtitle">Why global investors are moving capital into sustainable, off-grid hospitality properties in Central America.</p>
+        
         <div class="grid">
-            <div class="card" style="border-top: 6px solid var(--coral-flor);">
-                <div class="card-img" style="background-image: url('https://scis.ai');"></div>
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://scis.ai');"><span class="card-badge">Overland Hub</span></div>
                 <div class="card-content">
-                    <h3 class="editable" id="tit-c1" onclick="editarTextoForm(this)">Overland Car Camping</h3>
-                    <p class="editable" id="desc-c1" onclick="editarTextoForm(this)">Zonas equipadas fuera de la red (off-grid) diseñadas exclusivamente para autos Overlanders, tiendas de techo y casas rodantes en un entorno seguro.</p>
+                    <div>
+                        <h3 class="editable" id="t-v1" onclick="editarTextoForm(this)">Premier Overland Car Camping</h3>
+                        <p class="editable" id="d-v1" onclick="editarTextoForm(this)">We provide fully equipped off-grid zones specifically designed for overland vehicles, rooftop tents, and camper vans. High barrier to entry and surging global demand from international backpackers.</p>
+                    </div>
+                    <button class="btn-action" onclick="abrirWSRDirecto('Overland Car Camping')">⛺ Book via WhatsApp</button>
                 </div>
             </div>
-            <div class="card" style="border-top: 6px solid var(--amarillo-sol);">
-                <div class="card-img" style="background-image: url('https://scis.ai');"></div>
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://scis.ai');"><span class="card-badge">Gastronomy</span></div>
                 <div class="card-content">
-                    <h3 class="editable" id="tit-c2" onclick="editarTextoForm(this)">Cabañas de la Montaña</h3>
-                    <p class="editable" id="desc-c2" onclick="editarTextoForm(this)">Cabañas rústicas integradas a la vegetación. Despierta rodeado por heliconias, orquídeas salvajes y aire puro de montaña.</p>
+                    <div>
+                        <h3 class="editable" id="t-v2" onclick="editarTextoForm(this)">Active Restaurant Revenue</h3>
+                        <p class="editable" id="d-v2">Our physical infrastructure is an established food hub serving Latin fusion cuisine, fresh local dishes, and organic natural juices to steady international groups daily.</p>
+                    </div>
+                    <button class="btn-action" onclick="abrirWSRDirecto('Restaurant Menu')">🍳 Check Menu via WhatsApp</button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-img" style="background-image: url('https://scis.ai');"><span class="card-badge">Ecotourism Asset</span></div>
+                <div class="card-content">
+                    <div>
+                        <h3 class="editable" id="t-v3" onclick="editarTextoForm(this)">Birdwatching & Jungle Trails</h3>
+                        <p class="editable" id="d-v3">Monetized ecosystem cutting through deep forest paths for guided trekking, direct crystal river pool access, and premium birdwatching hotspots targeting rare exotics.</p>
+                    </div>
+                    <button class="btn-action" onclick="abrirWSRDirecto('Birdwatching & Trekking Tour')">🦜 Book Tour via WhatsApp</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN DE GASTRONOMÍA DEL RESTAURANTE -->
-    <div class="section-bg-selva" id="restaurante">
-        <section style="padding: 0;">
-            <h2 class="section-title">Restaurante & Comida Latina</h2>
+    <section id="social-proof" style="background: #eef7f2; max-width: 100%; padding: 60px 0;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <h2 class="section-title">Proven Market Traction</h2>
+            <p class="section-subtitle">Active visitation from global ecotourists, researchers, and professional birdwatchers weekly.</p>
             <div class="grid">
-                <div class="card" style="border-top: 6px solid var(--verde-hoja);">
-                    <div class="card-img" style="background-image: url('https://scis.ai');"></div>
-                    <div class="card-content">
-                        <h3 class="editable" id="tit-c3" onclick="editarTextoForm(this)">Platos Tradicionales</h3>
-                        <p class="editable" id="desc-c3" onclick="editarTextoForm(this)">Sabor criollo local preparado con ingredientes frescos y combos tradicionales de hamburguesas y patacones crujientes.</p>
-                    </div>
-                </div>
-                <div class="card" style="border-top: 6px solid var(--neon-selva);">
-                    <div class="card-img" style="background-image: url('https://scis.ai');"></div>
-                    <div class="card-content">
-                        <h3 class="editable" id="tit-c4" onclick="editarTextoForm(this)">Bebidas & Vitrina</h3>
-                        <p class="editable" id="desc-c4" onclick="editarTextoForm(this)">Jugos naturales de frutas de la región, refrescos bien fríos y atención rápida en nuestra barra de carretera.</p>
-                    </div>
-                </div>
+                <div class="card"><div class="card-img" style="background-image: url('https://scis.ai');"></div><div class="card-content"><h3>Eco Terrace Setup</h3><p>Open-air wooden facility designed exclusively for overland tourists and passing traffic.</p></div></div>
+                <div class="card"><div class="card-img" style="background-image: url('https://scis.ai');"></div><div class="card-content"><h3>Premium Meat Combos</h3><p>High-margin protein trays featuring local patacones, French fries, and artisan presentation.</p></div></div>
+                <div class="card"><div class="card-img" style="background-image: url('https://scis.ai');"></div><div class="card-content"><h3>Prime Roadside Position</h3><p>Strategic property elevation directly adjacent to the main paved regional highway route.</p></div></div>
             </div>
-        </section>
-    </div>
-
-    <!-- SECCIÓN CON TUS IMÁGENES REALES DE AVISTAMIENTO DE AVES -->
-    <section id="naturaleza">
-        <h2 class="section-title">Aventuras & Avistamiento de Aves</h2>
-        <div class="grid">
-            <div class="card" style="border-top: 6px solid var(--amarillo-sol);">
-                <div class="card-img" style="background-image: url('https://scis.ai');"></div>
-                <div class="card-content">
-                    <h3 class="editable" id="tit-c5" onclick="editarTextoForm(this)">🦜 Grupos de Observación</h3>
-                    <p class="editable" id="desc-c5" onclick="editarTextoForm(this)">Tus fotos en acción: Turistas internacionales equipados explorando las copas de los árboles en busca de tucanes y colibríes exóticos libres.</p>
-                </div>
-            </div>
-            <div class="card" style="border-top: 6px solid var(--verde-hoja);">
-                <div class="card-img" style="background-image: url('https://scis.ai');"></div>
-                <div class="card-content">
-                    <h3 class="editable" id="tit-c6" onclick="editarTextoForm(this)">🥾 Senderos de la Selva</h3>
-                    <p class="editable" id="desc-c6" onclick="editarTextoForm(this)">Tus fotos en acción: Rutas naturales y caminos cubiertos de hojas silvestres y musgos, ideales para adentrarse en la vegetación densa de Bürí.</p>
-                </div>
-            </div>
-            <div class="card" style="border-top: 6px solid var(--azul-rio);">
-                <div class="card-img" style="background-image: url('https://scis.ai');"></div>
-                <div class="card-content">
-                    <h3 class="editable" id="tit-c7" onclick="editarTextoForm(this)">🌊 Pozas de Río Cristalino</h3>
-                    <p class="editable" id="desc-c7" onclick="editarTextoForm(this)">Disfruta de baños sumamente refrescantes en las impecables aguas vivas y cristalinas de las pozas naturales dentro de la propiedad.</p>
-                </div>
-            </div>
-            <div class="card" style="border-top: 6px solid var(--magenta-mariposa);">
-                <div class="card-img" style="background-image: url('https://scis.ai');"></div>
-                <div class="card-content">
-                    <h3 class="editable" id="tit-c8" onclick="editarTextoForm(this)">🦋 Mariposas e Insectos</h3>
-                    <p class="editable" id="desc-c8" onclick="editarTextoForm(this)">Un festival de vida. Observa docenas de especies de coloridas mariposas exóticas polinizando el ecosistema protegido de la zona.</p>
-                </div>
+            <div class="grid" style="margin-top: 35px;">
+                <div class="card"><div class="card-img" style="background-image: url('https://scis.ai');"></div><div class="card-content"><h3>Commercial Showcase</h3><p>Active beverage counters and food display machinery ready for high-volume operation.</p></div></div>
+                <div class="card"><div class="card-img" style="background-image: url('https://scis.ai');"></div><div class="card-content"><h3>High-Volume Signage</h3><p>Clear, established multi-service branding capturing organic regional highway traffic.</p></div></div>
+                <div class="card"><div class="card-img" style="background-image: url('https://scis.ai');"></div><div class="card-content"><h3>Takeout & Catering Revenue</h3><p>Structured packaging workflow supplying quick meals to tour groups and regional workers.</p></div></div>
             </div>
         </div>
     </section>
 
-    <!-- MAPA ACTUALIZADO CON TUS COORDENADAS OFICIALES EN VALLE DE AGUA -->
+    <div class="trail-logo-container">
+        <p style="font-weight: bold; margin-bottom: 10px; text-transform: uppercase; font-size: 13px; color: #7f8c8d;">Official Route Integration</p>
+        <img src="https://scis.ai" class="trail-logo" alt="Risban Trail Logo">
+    </div>
+
+    <!-- MAPA CORREGIDO CON TUS COORDENADAS OFICIALES EN BÜRÍ / VALLE DE AGUA -->
     <div class="mapa-contenedor">
-        <h2 style="text-align: center; margin-bottom: 25px; color: var(--verde-selva); text-transform: uppercase; font-weight: 800;">📍 CÓMO LLEGAR A THE BUNKER</h2>
+        <h2 style="text-align: center; margin-bottom: 15px; color: var(--jungle-dark); text-transform: uppercase;">Strategic Geography</h2>
+        <p style="text-align: center; margin-bottom: 30px; color: #7f8c8d;">Direct access to Bocas del Toro logistics hub while maintaining pristine off-grid security.</p>
         <div class="mapa-box"><iframe src="https://google.com" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
     </div>
 
     <div style="max-width: 1200px; margin: 40px auto; text-align: center; padding: 0 20px;">
-        <p class="editable" id="txt-contacto-ub" onclick="editarTextoForm(this)">📍 <strong>Ubicación:</strong> Valle de Agua, Chiriquí Grande, Provincia de Bocas del Toro / Comarca, Panamá</p>
-        <p class="editable" id="txt-contacto-tel" onclick="editarTextoForm(this)">📞 <strong>WhatsApp de Reservas:</strong> +507 6347-6510</p>
+        <p class="editable" id="txt-c-ub" onclick="editarTextoForm(this)">📍 <strong>Asset Address:</strong> THE BUNKER Restaurante, Willy Mazue, Bürí, Bocas del Toro / Comarca, Panama</p>
+        <p style="margin-top: 10px;">📞 <strong>Line 1:</strong> +507 6652-7730 | 📞 <strong>Line 2:</strong> +507 6437-4561</p>
     </div>
 
     <footer>
-        <p>&copy; 2026 Hostal y Restaurante The Bunker (Bürí). Conservando nuestros ríos y bosques nativos.</p>
+        <p>&copy; 2026 The Bunker Eco-Hostal & Restaurant. Partnering with global visionaries for a sustainable future.</p>
         <div class="panel-admin">
-            <button class="btn-admin" onclick="activarModoEditor()">🔐 Acceso Propietario (Modificar Textos)</button>
+            <button class="btn-admin" onclick="activarModoEditor()">🔐 Founder Access (Modify Pitch Texts)</button>
         </div>
     </footer>
 
     <script type="text/javascript">
         function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'es', includedLanguages: 'en,de,fr,it,pt,es,nl', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,de,fr,it,pt,es,nl', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
         }
     </script>
-    <script type="text/javascript" src="https://google.com"></script>
-    <script>
-        let modoEditorActivo = false;
-        document.addEventListener("DOMContentLoaded", () => {
-            document.querySelectorAll('.editable').forEach(campo => { const guardado = localStorage.getItem(campo.id); if (guardado) campo.innerHTML = guardado; });
-        });
-        function activarModoEditor() {
-            if (prompt("Introduce tu clave maestra de administrador:") === "bunker123") {
-                modoEditorActivo = true; document.body.classList.add("edit-mode-active"); document.getElementById("status-bar").style.display = "block"; document.getElementById("main-header").style.marginTop = "40px";
-                alert("🔓 ¡Modo Propietario Listo! Solo toca cualquier cuadro con borde rojo para cambiar textos.");
-            } else { alert("❌ Clave incorrecta."); }
-        }
-        function editarTextoForm(elemento) {
-            if (!modoEditorActivo) return;
-            const textoActual = elemento.innerHTML.replace(/<[^>]*>/g, "").trim();
-            const nuevoTexto = prompt("Modificar este bloque:", textoActual);
-            if (nuevoTexto !== null && nuevoTexto.trim() !== "") { elemento.innerHTML = nuevoTexto; localStorage.setItem(elemento.id, nuevoTexto); alert("💾 Guardado automáticamente."); }
-        }
-    </script>
-</body>
-</html>

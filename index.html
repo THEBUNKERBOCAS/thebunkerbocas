@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<!DOCTYPE html><html lang="es"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Bunker Bocas</title>
@@ -62,27 +60,25 @@
 
         /* Barra Admin Superior */
         #bar-admin { 
-            display: none; position: fixed; top: 70px; left: 0; width: 100%; 
-            background: #2c3e50; color: white; padding: 10px; text-align: center; z-index: 999; 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; 
+            background: #2c3e50; color: white; padding: 15px; text-align: center; z-index: 1001; 
         }
         #bar-admin button { background: #2ecc71; color: white; border: none; padding: 6px 20px; margin-left: 15px; cursor: pointer; font-weight: bold; border-radius: 4px; }
+        #bar-admin button.btn-salir { background: #e74c3c; }
 
         /* Footer */
         footer { background: var(--madera); color: var(--tierra); text-align: center; padding: 25px; font-size: 0.9rem; }
         .lock { cursor: pointer; opacity: 0.5; }
 
         @media (max-width: 768px) { header { flex-direction: column; gap: 10px; } .hero h1 { font-size: 2.3rem; } }
-    </style>
-</head>
-<body>
+    </style></head><body>
 
-    <!-- Barra de herramientas del Administrador -->
     <div id="bar-admin">
-        <span>⚙️ Modo Editor: Haz clic en cualquier texto, botón, menú o imagen para editarlo.</span>
+        <span>⚙️ Modo Editor: Haz clic en cualquier texto, botón o imagen para editarlo.</span>
         <button onclick="save()">💾 Guardar Todo</button>
+        <button class="btn-salir" onclick="exitAdmin()">❌ Salir</button>
     </div>
 
-    <!-- Contenedor editable GLOBAL -->
     <div id="web-completa">
 
         <header>
@@ -126,16 +122,21 @@
             </div>
         </section>
 
-    </div> <!-- Fin del contenedor global -->
-
-    <footer>
+    </div> <footer>
         <p>&copy; 2026 The Bunker Bocas. | <span class="lock" onclick="login()">🔒 Administrar</span></p>
     </footer>
 
     <script>
         let editMode = false;
 
-        // Cargar todo el HTML guardado por el usuario
+        // Función auxiliar para desactivar clics en enlaces durante edición
+        function preventLinkClick(e) {
+            if (editMode) {
+                e.preventDefault();
+            }
+        }
+
+        // Cargar todo el HTML guardado por el usuario al iniciar la página
         if(localStorage.getItem('bunkerCompletoHTML')) {
             document.getElementById('web-completa').innerHTML = localStorage.getItem('bunkerCompletoHTML');
         }
@@ -145,16 +146,19 @@
             if(prompt("Contraseña de administración:") === "bunker123") {
                 editMode = true;
                 document.getElementById('bar-admin').style.display = "block";
+                document.body.style.paddingTop = "120px"; // Espacio extra para la barra admin
                 
                 // Hace editable TODO: títulos, párrafos, enlaces del menú, botones y logos
                 document.querySelectorAll('#web-completa h1, #web-completa h2, #web-completa h3, #web-completa p, #web-completa a, #web-completa .logo-text').forEach(el => {
                     el.contentEditable = true;
-                    // Evita que los enlaces te redirijan mientras editas sus nombres
+                    
                     if(el.tagName === 'A') {
-                        el.addEventListener('click', function(e) { if(editMode) e.preventDefault(); });
+                        // Remueve manejadores viejos para evitar duplicados y añade el bloqueo
+                        el.removeEventListener('click', preventLinkClick);
+                        el.addEventListener('click', preventLinkClick);
                     }
                 });
-                alert("¡Modo administrador al 100%! Puedes cambiar cualquier texto, menú, botón o imagen haciendo clic sobre ellos.");
+                alert("¡Modo administrador activo! Haz clic directamente en cualquier elemento para editarlo.");
             } else {
                 alert("Contraseña incorrecta.");
             }
@@ -165,39 +169,43 @@
             if(!editMode) return;
             event.stopPropagation();
             let newUrl = prompt("Inserta el enlace (URL) de la nueva imagen:", imgElement.src);
-            if(newUrl) imgElement.src = newUrl;
+            if(newUrl && newUrl.trim() !== "") imgElement.src = newUrl;
         }
 
         // Cambiar fondo de la sección de portada (Hero)
         function changeHeroBg(heroElement, event) {
             if(!editMode || event.target !== heroElement) return;
             let currentBg = heroElement.style.backgroundImage || "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1200";
-            let newUrl = prompt("Inserta la URL para cambiar la gran foto de portada:", currentBg.replace(/url\(['\"]?|['\"]?\)/g, ''));
-            if(newUrl) {
+            let cleanUrl = currentBg.replace(/url\(['\"]?|['\"]?\)/g, '').split(',').pop().trim(); 
+            
+            let newUrl = prompt("Inserta la URL para cambiar la gran foto de portada:", cleanUrl);
+            if(newUrl && newUrl.trim() !== "") {
                 heroElement.style.backgroundImage = `linear-gradient(rgba(30,63,32,0.6), rgba(30,63,32,0.75)), url('${newUrl}')`;
             }
         }
 
-        // Guardar la estructura completa libre de atributos temporales
+        // Guardar la estructura completa en LocalStorage libre de basura temporal
         function save() {
-            editMode = false;
-            document.getElementById('bar-admin').style.display = "none";
-            
-            // Limpiar las marcas de edición antes de guardar
+            // Quitar temporalmente el modo de edición visual para limpiar el HTML
             document.querySelectorAll('#web-completa *').forEach(el => el.removeAttribute('contenteditable'));
             
+            // Guardar en el almacenamiento local el contenedor web limpio
             localStorage.setItem('bunkerCompletoHTML', document.getElementById('web-completa').innerHTML);
-            alert("¡Estructura guardada con éxito!");
-            location.reload();
+            
+            // Devolver las propiedades si el usuario quiere seguir editando sin recargar de golpe
+            document.querySelectorAll('#web-completa h1, #web-completa h2, #web-completa h3, #web-completa p, #web-completa a, #web-completa .logo-text').forEach(el => {
+                el.contentEditable = true;
+            });
+            
+            alert("¡Cambios guardados con éxito en este navegador!");
         }
-    </script>
-</body>
-</html>
-¿Qué puedes editar exactamente ahora?
-El menú de navegación: Puedes cambiar los nombres "Inicio", "Nosotros" o "Espacios" por lo que quieras.
 
-El logo: Puedes borrar "THE BUNKER" en la barra de arriba y poner tu nombre completo o eslogan.
-
-El gran botón verde: Si quieres que el botón de la portada diga "Reservar aquí" en lugar de "Explorar", lo borras y lo escribes en vivo.
-
-La gran foto de fondo superior: Estando en modo editor, haces clic en cualquier zona vacía de la portada y te pedirá el enlace para reemplazar el paisaje principal.
+        // Salir del modo administrador de forma segura
+        function exitAdmin() {
+            editMode = false;
+            document.getElementById('bar-admin').style.display = "none";
+            document.body.style.paddingTop = "70px";
+            document.querySelectorAll('#web-completa *').forEach(el => el.removeAttribute('contenteditable'));
+            location.reload(); // Recarga la página para restaurar la navegación normal de los enlaces
+        }
+    </script></body></html>

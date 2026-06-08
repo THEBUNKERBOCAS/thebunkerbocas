@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THE BUNKER | Hostal, Restaurante y Ecoturismo en Bürí</title>
     <style>
-        /* Paleta de Colores de Integración Natural de THE BUNKER */
+        /* Paleta de Colores Boscosa de THE BUNKER */
         :root { 
             --verde-bunker: #0b2216; 
             --musgo: #104c32; 
@@ -18,16 +18,16 @@
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; scroll-behavior: smooth; }
-        body { background: var(--tierra); color: #2c3e50; line-height: 1.6; padding-top: 70px; }
+        body { background: var(--tierra); color: #2c3e50; line-height: 1.6; padding-top: 40px; }
         h1, h2, h3 { color: var(--verde-bunker); font-weight: 700; text-align: center; }
-        section { padding: 40px 8%; position: relative; }
         
         /* Contenedor de Banderas Oficiales */
         .contenedor-banderas {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-top: 15px;
+            margin-top: 20px;
+            margin-bottom: 20px;
             align-items: center;
         }
         .bandera-item {
@@ -39,32 +39,35 @@
             color: #5a6c7d;
         }
         .bandera-item span {
-            font-size: 24px;
+            font-size: 28px;
             line-height: 1;
             margin-bottom: 2px;
         }
         .flag-ngabe {
-            width: 36px; height: 24px;
+            width: 42px; height: 28px;
             background: linear-gradient(to right, #f1c40f 33%, #ffffff 33%, #ffffff 66%, #e74c3c 66%);
-            border: 1px solid #ccc; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 8px !important; color: #0b2216; font-weight: bold;
+            border: 1px solid #ccc; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 9px !important; color: #0b2216; font-weight: bold;
         }
         .flag-bocas {
-            width: 36px; height: 24px;
+            width: 42px; height: 28px;
             background: linear-gradient(to bottom right, #104c32 50%, #f1c40f 50%);
-            border: 1px solid #ccc; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 8px !important; color: white; font-weight: bold;
+            border: 1px solid #ccc; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 9px !important; color: white; font-weight: bold;
         }
 
-        /* Contenedor Grid Principal sin Duplicaciones */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; padding: 20px; align-items: stretch; }
-        .card { background: var(--blanco); padding: 25px; border-radius: var(--radio-borde); display: flex; flex-direction: column; justify-content: space-between; border-top: 5px solid var(--musgo); position: relative; box-shadow: 0 8px 25px rgba(7,25,16,0.04); transition: transform 0.3s ease; }
+        /* Diseño de Rejilla del Catálogo */
+        .contenedor-principal { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; padding-top: 20px; align-items: stretch; }
+        .card { background: var(--blanco); padding: 25px; border-radius: var(--radio-borde); display: flex; flex-direction: column; justify-content: space-between; border-top: 6px solid var(--musgo); position: relative; box-shadow: 0 8px 25px rgba(7,25,16,0.06); transition: transform 0.3s ease; }
         .card:hover { transform: translateY(-5px); }
         .card img { width: 100%; height: 200px; object-fit: cover; border-radius: var(--radio-borde); cursor: pointer; transition: 0.3s; margin-bottom: 15px; }
+        .card h3 { text-align: left; margin-bottom: 10px; font-size: 22px; color: var(--musgo); }
+        .card p { color: #5a6c7d; font-size: 15px; margin-bottom: 15px; text-align: left; }
         
-        /* Botones API Oficial de WhatsApp */
-        .btn-wsr { display: block; text-align: center; background: #25D366; color: white; padding: 14px; text-decoration: none; border-radius: 50px; margin-top: 15px; font-weight: bold; transition: 0.3s; text-transform: uppercase; font-size: 14px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(37,211,102,0.3); }
+        /* Botones Oficiales de WhatsApp */
+        .btn-wsr { display: block; text-align: center; background: #25D366; color: white; padding: 14px; text-decoration: none; border-radius: 50px; font-weight: bold; transition: 0.3s; text-transform: uppercase; font-size: 13px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(37,211,102,0.3); border: none; cursor: pointer; }
         .btn-wsr:hover { background: #128C7E; transform: scale(1.02); }
         
-        /* Estilos del Motor de Edición CMS */
+        /* Sistema CMS Modo Propietario */
         .bunker-cms-activo [contenteditable="true"] { outline: 2.5px dashed var(--neon-gold) !important; background: #fffdf0 !important; padding: 2px 6px; border-radius: 6px; color: #2c3e50 !important; }
         .bunker-foto-editable { outline: 3px dashed #e74c3c !important; opacity: 0.9; }
         
@@ -78,76 +81,72 @@
 </head>
 <body>
 
-    <!-- Panel de control interactivo superior -->
+    <!-- Panel de administración in-situ -->
     <div id="bar-admin">
-        <strong>⚙️ PANEL CMS EXPERTO THE BUNKER:</strong>
+        <strong>⚙️ PANEL CMS THE BUNKER:</strong>
         <button onclick="agregarTarjeta()">➕ Añadir Servicio</button>
         <button onclick="guardarTodo()" style="background: #3498db;">💾 Guardar Cambios</button>
         <button onclick="cerrarEditor()" style="background: #e74c3c;">Salir del Editor</button>
     </div>
 
-    <!-- Encabezado Principal -->
-    <section style="padding-top: 40px; padding-bottom: 20px;">
-        <h1 class="editable" id="main-title" style="font-size: 3rem; text-transform: uppercase; letter-spacing: 2px;">THE BUNKER</h1>
-        
-        <!-- Bloque de Banderas Identitarias Requeridas -->
-        <div class="contenedor-banderas">
-            <div class="bandera-item">
-                <span>🇵🇦</span>
-                PANAMÁ
-            </div>
-            <div class="bandera-item">
-                <div class="flag-ngabe">N-B</div>
-                NGÄBE-BUGLÉ
-            </div>
-            <div class="bandera-item">
-                <div class="flag-bocas">B-T</div>
-                BOCAS DEL TORO
-            </div>
-        </div>
-
-        <h2 class="editable" id="main-sub" style="font-size: 1.2rem; font-weight: 400; margin-top: 20px; color: #5a6c7d;">Hospedaje, Restaurante y Turismo Activo en Willy Mazue, Bürí</h2>
-    </section>
-
-    <!-- Sección Única del Catálogo de Servicios Interactivos -->
-    <main>
-        <div class="grid" id="contenedor-tarjetas">
+    <div class="contenedor-principal">
+        <!-- Encabezado del Portal -->
+        <header style="padding: 20px 0; background: transparent; text-align: center;">
+            <h1 class="editable" id="main-title" style="font-size: 3.5rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px;">THE BUNKER</h1>
             
-            <!-- Servicio 1: Hostal -->
-            <div class="card" id="card-hostal">
-                <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
-                <img src="https://unsplash.com" id="img-hostal" alt="Hostal en Bürí">
-                <h3 class="editable" id="tit-hostal">Hostal Ecológico</h3>
-                <p class="editable" id="desc-hostal">Habitaciones compartidas y privadas con diseño sostenible en madera. Ventilación natural y descanso profundo rodeado por el bosque tropical de la Comarca Ngäbe-Buglé.</p>
-                <a href="https://wa.me" target="_blank" class="btn-wsr" id="btn-hostal">Reservar Hostal</a>
+            <!-- Bloque de Banderas Identitarias -->
+            <div class="contenedor-banderas">
+                <div class="bandera-item">
+                    <span>🇵🇦</span>
+                    PANAMÁ
+                </div>
+                <div class="bandera-item">
+                    <div class="flag-ngabe">N-B</div>
+                    NGÄBE-BUGLÉ
+                </div>
+                <div class="bandera-item">
+                    <div class="flag-bocas">B-T</div>
+                    BOCAS DEL TORO
+                </div>
             </div>
 
-            <!-- Servicio 2: Restaurante -->
-            <div class="card" id="card-restaurante">
-                <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
-                <img src="https://unsplash.com" id="img-restaurante" alt="Restaurante en Bürí">
-                <h3 class="editable" id="tit-restaurante">Restaurante Rústico</h3>
-                <p class="editable" id="desc-restaurante">Sabores tradicionales autóctonos y platillos caseros abundantes. Preparamos ingredientes locales frescos para reponer energías tras las exigentes caminatas de montaña.</p>
-                <a href="https://wa.me" target="_blank" class="btn-wsr" id="btn-restaurante">Consultar Menú</a>
-            </div>
+            <h2 class="editable" id="main-sub" style="font-size: 1.3rem; font-weight: 400; margin-top: 15px; color: #5a6c7d;">Hospedaje, Restaurante y Turismo Activo en Willy Mazue, Bürí</h2>
+        </header>
 
-            <!-- Servicio 3: Río -->
-            <div class="card" id="card-rio">
-                <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
-                <img src="https://unsplash.com" id="img-rio" alt="Río en Willy Mazue">
-                <h3 class="editable" id="tit-rio">Río Cristalino</h3>
-                <p class="editable" id="desc-rio">Disfruta de un baño refrescante en las corrientes de agua pura y natural de Willy Mazue. Balnearios seguros y senderos fluviales directos a solo unos pasos del campamento.</p>
-                <a href="https://wa.me" target="_blank" class="btn-wsr" id="btn-rio">Ubicación del Río</a>
-            </div>
+        <!-- Catálogo de Servicios (Sin duplicaciones) -->
+        <main>
+            <div class="grid" id="contenedor-tarjetas">
+                
+                <!-- Tarjeta 1: Hostal -->
+                <div class="card" id="card-hostal">
+                    <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
+                    <img src="https://unsplash.com" id="img-hostal" alt="Hostal en Bürí">
+                    <h3 class="editable" id="tit-hostal">Hostal Ecológico</h3>
+                    <p class="editable" id="desc-hostal">Habitaciones cómodas diseñadas de forma sostenible en madera. Ventilación natural y descanso profundo rodeado por el bosque tropical de la comarca.</p>
+                    <a href="https://wa.me" target="_blank" class="btn-wsr" id="btn-hostal">Reservar Hostal (+507 6652-7730)</a>
+                </div>
 
-            <!-- Servicio 4: Avistamiento de Aves -->
-            <div class="card" id="card-aves">
-                <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
-                <img src="https://unsplash.com" id="img-aves" alt="Avistamiento de Aves en Bürí">
-                <h3 class="editable" id="tit-aves">Avistamiento de Aves</h3>
-                <p class="editable" id="desc-aves">Explora la biodiversidad nativa de la región. Avista tucanes, colibríes y especies exóticas de la Comarca guiado por conocedores locales en sesiones fotográficas de mañana.</p>
-                <a href="https://wa.me" target="_blank" class="btn-wsr" id="btn-aves">Reservar Tour de Aves</a>
-            </div>
+                <!-- Tarjeta 2: Restaurante -->
+                <div class="card" id="card-restaurante">
+                    <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
+                    <img src="https://unsplash.com" id="img-restaurante" alt="Restaurante en Bürí">
+                    <h3 class="editable" id="tit-restaurante">Restaurante Rústico</h3>
+                    <p class="editable" id="desc-restaurante">Sabores tradicionales autóctonos y comidas caseras abundantes. Preparamos ingredientes locales frescos del campo para reponer energías.</p>
+                    <a href="https://wa.me" target="_blank" class="btn-wsr" id="btn-restaurante">Consultar Menú (+507 6437-451)</a>
+                </div>
 
-            <!-- Servicio 5: Senderismo -->
-            <div class="card" id="card-senderismo">
+                <!-- Tarjeta 3: Río -->
+                <div class="card" id="card-rio">
+                    <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
+                    <img src="https://unsplash.com" id="img-rio" alt="Río en Willy Mazue">
+                    <h3 class="editable" id="tit-rio">Río Cristalino</h3>
+                    <p class="editable" id="desc-rio">Disfruta de un baño refrescante en las corrientes de agua pura y natural de Willy Mazue. Balnearios seguros a solo unos pasos de la estancia.</p>
+                    <a href="https://wa.me" target="_blank" class="btn-wsr" id="btn-rio">Ubicación del Río (+507 6652-7730)</a>
+                </div>
+
+                <!-- Tarjeta 4: Avistamiento de Aves -->
+                <div class="card" id="card-aves">
+                    <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
+                    <img src="https://unsplash.com" id="img-aves" alt="Avistamiento de Aves">
+                    <h3 class="editable" id="tit-aves">Avistamiento de Aves</h3>
+                    <p class="editable" id="desc-aves">Explora la biodiversidad nativa de la región. Avista tucanes, colibríes y especies exóticas guiado por conocedores locales.</p>

@@ -3,173 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE BUNKER | Hospedaje, Restaurante y Aventura en Bürí</title>
+    <title>THE BUNKER | Hostal, Restaurante y Ecoturismo en Bürí</title>
     <style>
-        /* Paleta Boscosa de THE BUNKER */
-        :root {
-            --verde-bunker: #1E3F20;
-            --musgo: #4A6B48;
+        /* Paleta de Colores de Integración Natural de THE BUNKER */
+        :root { 
+            --verde-bunker: #0b2216; 
+            --musgo: #104c32; 
             --hoja: #A2B997;
-            --tierra: #F4F1EA;
+            --tierra: #f5fcf8; 
+            --blanco: #FFFFFF; 
             --madera: #3E2723;
-            --blanco: #FFFFFF;
-            --radio-borde: 12px;
+            --neon-gold: #f1c40f;
+            --radio-borde: 16px;
         }
-
-        /* Estilos Base */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; scroll-behavior: smooth; }
-        body { background: var(--tierra); color: #2C3E35; line-height: 1.6; padding-top: 70px; }
-        h1, h2, h3, h4 { color: var(--verde-bunker); font-weight: 700; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; scroll-behavior: smooth; }
+        body { background: var(--tierra); color: #2c3e50; line-height: 1.6; padding-top: 70px; }
+        h1, h2, h3 { color: var(--verde-bunker); font-weight: 700; text-align: center; }
         section { padding: 60px 8%; position: relative; }
-        .blanco { background: var(--blanco); }
         
-        /* Botones e Interfaz */
-        .btn { 
-            background: var(--musgo); color: var(--blanco); padding: 12px 30px; 
-            text-decoration: none; border-radius: 25px; font-weight: bold; 
-            display: inline-block; transition: 0.3s; border: none; cursor: pointer;
+        /* Contenedor de Banderas Oficiales */
+        .contenedor-banderas {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            align-items: center;
         }
-        .btn:hover { background: var(--hoja); color: var(--verde-bunker); }
+        .bandera-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 11px;
+            font-weight: bold;
+            color: #5a6c7d;
+        }
+        .bandera-item span {
+            font-size: 24px;
+            line-height: 1;
+            margin-bottom: 2px;
+        }
+        /* Emulación de banderas regionales sin emoji directo */
+        .flag-ngabe {
+            width: 36px; height: 24px;
+            background: linear-gradient(to right, #f1c40f 33%, #ffffff 33%, #ffffff 66%, #e74c3c 66%);
+            border: 1px solid #ccc; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 8px !important; color: #0b2216; font-weight: bold;
+        }
+        .flag-bocas {
+            width: 36px; height: 24px;
+            background: linear-gradient(to bottom right, #104c32 50%, #f1c40f 50%);
+            border: 1px solid #ccc; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 8px !important; color: white; font-weight: bold;
+        }
+
+        /* Contenedor Grid Principal sin Duplicaciones */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 35px; padding: 20px; align-items: stretch; }
+        .card { background: var(--blanco); padding: 25px; border-radius: var(--radio-borde); display: flex; flex-direction: column; justify-content: space-between; border-top: 5px solid var(--musgo); position: relative; box-shadow: 0 8px 25px rgba(7,25,16,0.04); transition: transform 0.3s ease; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: var(--radio-borde); cursor: pointer; transition: 0.3s; margin-bottom: 15px; }
         
-        .btn-wsr { background: #25D366; color: white; margin-top: 15px; width: 100%; text-align: center; display: inline-block; text-decoration: none; padding: 10px; border-radius: 25px; font-weight: bold; }
-        .btn-wsr:hover { background: #128C7E; color: white; }
-
-        /* Navegación Fija */
-        header { 
-            background: var(--verde-bunker); padding: 15px 8%; position: fixed; 
-            top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; align-items: center; 
-        }
-        .logo-text { color: var(--tierra); font-weight: bold; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 1px; }
-        header nav { display: flex; gap: 20px; }
-        header nav a { color: var(--tierra); text-decoration: none; font-weight: 500; }
-
-        /* Portada Principal (Hero) */
-        .hero { 
-            background: linear-gradient(rgba(30,63,32,0.4), rgba(30,63,32,0.65)), 
-                        url('https://unsplash.com') center/cover;
-            height: 65vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--blanco);
-        }
-        .hero h1 { color: var(--blanco); font-size: 3.5rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
-        .hero p { color: var(--tierra); font-size: 1.2rem; max-width: 600px; margin-bottom: 25px; }
-        .hero .botones-hero { display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
-
-        /* Estructura de Rejilla (Grid) */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 35px; align-items: stretch; }
-        .card { background: var(--blanco); padding: 25px; border-radius: var(--radio-borde); display: flex; flex-direction: column; justify-content: space-between; border-top: 5px solid var(--musgo); position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+        /* Botones API Oficial de WhatsApp */
+        .btn-wsr { display: block; text-align: center; background: #25D366; color: white; padding: 14px; text-decoration: none; border-radius: 50px; margin-top: 15px; font-weight: bold; transition: 0.3s; text-transform: uppercase; font-size: 14px; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(37,211,102,0.3); }
+        .btn-wsr:hover { background: #128C7E; transform: scale(1.02); }
         
-        img { border-radius: var(--radio-borde); cursor: pointer; transition: 0.3s; }
-        .card img { width: 100%; height: 180px; object-fit: cover; margin-bottom: 15px; }
-
-        /* Indicadores visuales del Modo Administrador CMS */
-        .bunker-cms-activo [contenteditable="true"] { 
-            outline: 2px dashed var(--hoja) !important; 
-            background: rgba(162, 185, 151, 0.2) !important; 
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        .bunker-foto-editable {
-            outline: 3px dashed var(--coral-flor, #e74c3c) !important;
-            opacity: 0.9;
-            cursor: pointer;
-        }
-        .bunker-hero-editable {
-            outline: 4px dashed #f1c40f !important;
-            cursor: pointer;
-        }
-
-        /* Panel de Control Superior Fijo */
-        #bar-admin { 
-            display: none; position: fixed; top: 0; left: 0; width: 100%; 
-            background: #2c3e50; color: white; padding: 12px; text-align: center; z-index: 2000; font-size: 0.9rem;
-        }
-        #bar-admin button { background: #2ecc71; color: white; border: none; padding: 6px 12px; margin: 0 5px; cursor: pointer; font-weight: bold; border-radius: 4px; }
-        #bar-admin button.del { background: #e74c3c; }
-        #bar-admin button.opt { background: #34495e; border: 1px solid #7f8c8d; }
-
-        .btn-borrar-item {
-            display: none; position: absolute; top: -10px; right: -10px; 
-            background: #e74c3c; color: white; border: none; width: 26px; height: 26px; 
-            border-radius: 50%; font-weight: bold; cursor: pointer; z-index: 10;
-        }
-
-        /* Footer */
-        footer { background: var(--madera); color: var(--tierra); text-align: center; padding: 30px; font-size: 0.9rem; }
-        .lock { cursor: pointer; opacity: 0.6; font-weight: bold; }
+        /* Estilos del Motor de Edición CMS */
+        .bunker-cms-activo [contenteditable="true"] { outline: 2.5px dashed var(--neon-gold) !important; background: #fffdf0 !important; padding: 2px 6px; border-radius: 6px; color: #2c3e50 !important; }
+        .bunker-foto-editable { outline: 3px dashed #e74c3c !important; opacity: 0.9; }
+        
+        #bar-admin { display: none; position: fixed; top: 0; left: 0; width: 100%; background: #2c3e50; color: white; padding: 12px; text-align: center; z-index: 2500; font-size: 0.9rem; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        #bar-admin button { background: #2ecc71; color: white; border: none; padding: 8px 16px; margin: 0 5px; cursor: pointer; font-weight: bold; border-radius: 20px; }
+        
+        .btn-borrar-item { display: none; position: absolute; top: -10px; right: -10px; background: #e74c3c; color: white; border: none; width: 28px; height: 28px; border-radius: 50%; font-weight: bold; cursor: pointer; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        footer { background: var(--verde-bunker); color: #8fa399; text-align: center; padding: 40px 20px; font-size: 0.9rem; margin-top: 60px; border-top: 4px solid var(--musgo); }
+        .lock { cursor: pointer; opacity: 0.7; font-weight: bold; color: var(--hoja); text-decoration: underline; }
     </style>
 </head>
-<body class="bunker-portal">
+<body>
 
     <!-- Panel de control interactivo superior -->
     <div id="bar-admin">
-        <strong>⚙️ PANEL CMS THE BUNKER:</strong>
-        <button onclick="agregarTarjeta()">➕ Añadir Tarjeta</button>
-        <button class="opt" onclick="cambiarBordes()">📐 Cambiar Bordes</button>
-        <button onclick="guardarTodo()" style="background: #3498db;">💾 Guardar Todo</button>
-        <button class="del" onclick="cerrarEditor()">Salir sin guardar</button>
+        <strong>⚙️ PANEL CMS EXPERTO THE BUNKER:</strong>
+        <button onclick="agregarTarjeta()">➕ Añadir Servicio</button>
+        <button onclick="guardarTodo()" style="background: #3498db;">💾 Guardar Cambios</button>
+        <button onclick="cerrarEditor()" style="background: #e74c3c;">Salir del Editor</button>
     </div>
 
-    <!-- Encabezado / Navbar -->
-    <header>
-        <div class="logo-text editable" id="logo-sitio">THE BUNKER</div>
-        <nav id="menu-navegacion">
-            <a href="#inicio" class="editable" id="nav-1">Inicio</a>
-            <a href="#nosotros" class="editable" id="nav-2">Nosotros</a>
-            <a href="#servicios" class="editable" id="nav-3">Servicios</a>
-        </nav>
-    </header>
-
-    <!-- Zona editable dinámicamente -->
-    <div id="bloques-dinamicos">
-
-        <!-- Portada (Sección 1) -->
-        <section class="hero" id="inicio">
-            <h1 id="hero-tit" class="editable">THE BUNKER</h1>
-            <p id="hero-sub" class="editable">Tu refugio natural en Bürí. Un espacio diseñado para desconectar, descansar y vivir una experiencia única en el bosque profundo.</p>
-            <div class="botones-hero">
-                <a href="https://wa.me" target="_blank" class="btn editable" id="btn-hero-wa1">Chat WhatsApp 1</a>
-                <a href="https://wa.me" target="_blank" class="btn editable" style="background:var(--madera);" id="btn-hero-wa2">Chat WhatsApp 2</a>
+    <!-- Encabezado Principal -->
+    <section style="padding-top: 40px; padding-bottom: 20px;">
+        <h1 class="editable" id="main-title" style="font-size: 3rem; text-transform: uppercase; letter-spacing: 2px;">THE BUNKER</h1>
+        
+        <!-- Bloque de Banderas Identitarias Requeridas -->
+        <div class="contenedor-banderas">
+            <div class="bandera-item">
+                <span>🇵🇦</span>
+                PANAMÁ
             </div>
-        </section>
-
-        <!-- Nosotros (Sección 2) -->
-        <section class="blanco" id="nosotros">
-            <div class="grid">
-                <div>
-                    <h2 class="editable" id="nosotros-tit">Sobre Nosotros</h2><br>
-                    <p class="editable" id="nosotros-desc">THE BUNKER nace como un concepto de integración total con la naturaleza de la comarca. Buscamos ofrecer un espacio rústico pero sofisticado, donde la vegetación tropical, la fauna silvestre y la tranquilidad absoluta sean los protagonistas de tu estadía rural.</p>
-                </div>
-                <div style="position: relative; width: 100%;">
-                    <!-- Imagen de Portada de Contenido -->
-                    <img src="https://unsplash.com" style="width:100%;" id="img-nosotros" alt="Bosque con niebla">
-                </div>
+            <div class="bandera-item">
+                <div class="flag-ngabe">N-B</div>
+                NGÄBE-BUGLÉ
             </div>
-        </section>
+            <div class="bandera-item">
+                <div class="flag-bocas">B-T</div>
+                BOCAS DEL TORO
+            </div>
+        </div>
 
-        <!-- Servicios y Experiencias (Sección 3) -->
-        <section id="servicios">
-            <h2 style="text-align:center; margin-bottom: 40px;" id="titulo-exp" class="editable">Nuestros Servicios y Aventura</h2>
+        <h2 class="editable" id="main-sub" style="font-size: 1.2rem; font-weight: 400; margin-top: 20px; color: #5a6c7d;">Hospedaje, Restaurante y Turismo Activo en Willy Mazue, Bürí</h2>
+    </section>
+
+    <!-- Sección Única del Catálogo de Servicios Interactivos -->
+    <main>
+        <div class="grid" id="contenedor-tarjetas">
             
-            <div class="grid" id="contenedor-tarjetas">
-                <!-- Tarjeta 1: Hostal -->
-                <div class="card" id="card-hostal">
-                    <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
-                    <img src="https://unsplash.com" id="img-card-1" alt="Hospedaje Hostal">
-                    <h3 class="editable" id="tit-card-1">Hostal Ecológico</h3>
-                    <p class="editable" id="desc-card-1">Habitaciones cómodas diseñadas en armonía con el entorno, ideales para el descanso profundo de viajeros y aventureros.</p>
-                    <a href="https://wa.me" target="_blank" class="btn btn-wsr editable" id="btn-card-1">Reservar Hostal</a>
-                </div>
+            <!-- Servicio 1: Hostal -->
+            <div class="card" id="card-hostal">
+                <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
+                <img src="https://unsplash.com" id="img-hostal" alt="Hostal en Bürí">
+                <h3 class="editable" id="tit-hostal">Hostal Ecológico</h3>
+                <p class="editable" id="desc-hostal">Habitaciones compartidas y privadas con diseño sostenible en madera. Ventilación natural y descanso profundo rodeado por el bosque tropical de la Comarca Ngäbe-Buglé.</p>
+                <a href="https://wa.me" target="_blank" class="btn-wsr" id="btn-hostal">Reservar Hostal</a>
+            </div>
 
-                <!-- Tarjeta 2: Restaurante -->
-                <div class="card" id="card-restaurante">
-                    <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
-                    <img src="https://unsplash.com" id="img-card-2" alt="Restaurante">
-                    <h3 class="editable" id="tit-card-2">Restaurante del Bosque</h3>
-                    <p class="editable" id="desc-card-2">Sabores locales e ingredientes frescos del campo para reponer energías después de tus exploraciones de montaña.</p>
-                    <a href="https://wa.me" target="_blank" class="btn btn-wsr editable" id="btn-card-2">Consultar Menú</a>
-                </div>
+            <!-- Servicio 2: Restaurante -->
+            <div class="card" id="card-restaurante">
+                <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
+                <img src="https://unsplash.com" id="img-restaurante" alt="Restaurante en Bürí">
+                <h3 class="editable" id="tit-restaurante">Restaurante Rústico</h3>
+                <p class="editable" id="desc-restaurante">Sabores tradicionales autóctonos y platillos caseros abundantes. Preparamos ingredientes locales frescos para reponer energías tras las exigentes caminatas de montaña.</p>
+                <a href="https://wa.me" target="_blank" class="btn-wsr" id="btn-restaurante">Consultar Menú</a>
+            </div>
 
-                <!-- Tarjeta 3: Río -->
-                <div class="card" id="card-rio">
-                    <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
-                    <img src="https://unsplash.com" id="img-card-3" alt="Río Cristalino">
-                    <h3 class="editable" id="tit-card-3">Río Cristalino</h3>
+            <!-- Servicio 3: Río -->
+            <div class="card" id="card-rio">
+                <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
+                <img src="https://unsplash.com" id="img-rio" alt="Río en Willy Mazue">
+                <h3 class="editable" id="tit-rio">Río Cristalino</h3>
+                <p class="editable" id="desc-rio">Disfruta de un baño refrescante en las corrientes de agua pura y natural de Willy Mazue. Balnearios seguros y senderos fluviales directos a solo unos pasos del campamento.</p>
+                <a href="https://wa.me" target="_blank" class="btn-wsr" id="btn-rio">Ubicación del Río</a>
+            </div>
+
+            <!-- Servicio 4: Avistamiento de Aves -->
+            <div class="card" id="card-aves">
+                <button class="btn-borrar-item" onclick="this.parentElement.remove()">✕</button>
+                <img src="https://unsplash.com" id="img-aves" alt="Avistamiento de Aves en Bürí">
+                <h3 class="editable" id="tit-aves">Avistamiento de Aves</h3>
+                <p class="editable" id="desc-aves">Explora la biodiversidad nativa de la región. Avista tucanes, colibríes y especies exóticas de la Comarca guiado por conocedores locales en sesiones fotográficas de mañana.</p>
+                <a href="https://wa.me" target="_blank" class="btn-wsr" id="btn-aves">Reservar Tour de Aves</a>
+            </div>
+
+            <!-- Servicio 5: Senderismo -->
+            <div class="card" id="card-senderismo">

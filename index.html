@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Bunker | Hostal & Restaurante</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <style>
+        /* --- PALETA DE COLORES Y VARIABLES --- */
         :root {
             --color-principal: #1a1a1a;
             --color-secundario: #c5a880;
@@ -13,6 +17,7 @@
             --color-texto-claro: #ffffff;
         }
 
+        /* --- CONFIGURACIÓN GENERAL --- */
         * {
             margin: 0;
             padding: 0;
@@ -24,13 +29,17 @@
             background-color: var(--color-fondo);
             color: var(--color-texto-oscuro);
             line-height: 1.6;
+            padding-top: 70px;
+            overflow-x: hidden;
         }
 
+        /* --- CABECERA Y NAVEGACIÓN --- */
         header {
             background-color: var(--color-principal);
             position: fixed;
             width: 100%;
             top: 0;
+            left: 0;
             z-index: 1000;
             border-bottom: 2px solid var(--color-secundario);
         }
@@ -52,12 +61,15 @@
             letter-spacing: 2px;
         }
 
-        .logo span { color: var(--color-secundario); }
+        .logo span {
+            color: var(--color-secundario);
+        }
 
         .nav-menu {
             display: flex;
             list-style: none;
             align-items: center;
+            gap: 10px;
         }
 
         .nav-menu li a {
@@ -68,21 +80,27 @@
             font-weight: 500;
         }
 
-        .nav-menu li a:hover, .admin-btn:hover { color: var(--color-secundario); }
+        .nav-menu li a:hover, .admin-btn:hover {
+            color: var(--color-secundario);
+        }
 
         .admin-btn {
             background: none;
             border: 1px solid var(--color-secundario);
             color: white;
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 4px;
             cursor: pointer;
-            margin-left: 10px;
+            transition: 0.3s;
         }
 
+        /* --- SECCIÓN HERO (PORTADA) --- */
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
-            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), #1a1a1a;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 60vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -92,9 +110,20 @@
             padding: 0 1rem;
         }
 
-        .hero h1 { font-size: 3.5rem; text-transform: uppercase; margin-bottom: 1rem; }
-        .hero p { font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; }
+        .hero h1 {
+            font-size: 3.5rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
 
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        /* --- BOTONES --- */
         .btn {
             background-color: var(--color-secundario);
             color: var(--color-principal);
@@ -103,19 +132,35 @@
             font-weight: bold;
             text-transform: uppercase;
             border-radius: 4px;
-            transition: background 0.3s, transform 0.3s;
             display: inline-block;
             margin: 5px;
             border: none;
             cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
         }
 
         .btn-wsp { background-color: #25D366; color: white; }
         .btn-gps { background-color: #4285F4; color: white; }
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
 
-        section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
-        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; text-transform: uppercase; }
+        /* --- SECCIONES --- */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+        }
+
+        /* --- MENÚ RESTAURANTE --- */
         .menu-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -131,60 +176,150 @@
             position: relative;
         }
 
-        .menu-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: bold; }
-        .price { color: var(--color-secundario); background-color: var(--color-principal); padding: 2px 8px; border-radius: 4px; }
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
 
-        .hostal-info { display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; }
-        .hostal-img { flex: 1; min-width: 300px; position: relative; }
-        .hostal-img img { width: 100%; border-radius: 8px; }
-        .hostal-text { flex: 1; min-width: 300px; }
+        .price {
+            color: var(--color-secundario);
+            background-color: var(--color-principal);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
 
-        .bg-dark { background-color: var(--color-principal); color: var(--color-texto-claro); }
-        .contacto-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
-        .info-box h3 { color: var(--color-secundario); margin-bottom: 1rem; }
+        /* --- CONTENEDORES DE ANCHO COMPLETO --- */
+        .hostal-wrapper {
+            background-color: #eaeaea;
+            width: 100%;
+        }
 
-        footer { background-color: #0f0f0f; color: #777; text-align: center; padding: 1.5rem; font-size: 0.9rem; }
+        .hostal-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: center;
+        }
 
-        /* --- BOTONES DE EDICIÓN (OCULTOS POR DEFECTO) --- */
+        .hostal-img {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+
+        .hostal-img img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            height: 350px;
+            display: block;
+        }
+
+        .hostal-text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .contacto-wrapper {
+            background-color: var(--color-principal);
+            color: var(--color-texto-claro);
+            width: 100%;
+        }
+
+        .contacto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-box h3 {
+            color: var(--color-secundario);
+            margin-bottom: 1rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #0f0f0f;
+            color: #777;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* --- INTERFAZ ADMINISTRADOR --- */
         .admin-controls {
             display: none;
             background: #fff3cd;
-            padding: 10px;
+            padding: 12px;
             position: fixed;
             bottom: 0;
             width: 100%;
             left: 0;
             z-index: 2000;
             text-align: center;
-            border-top: 2px solid #ffc107;
+            border-top: 3px solid #ffc107;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
         }
-        
-        .editable { border: 1px dashed transparent; }
-        body.admin-mode .editable { border: 1px dashed #ffc107; background-color: rgba(255, 193, 7, 0.05); }
-        
-        body.admin-mode .edit-img-btn, body.admin-mode .delete-item-btn {
+
+        .editable {
+            border: 1px dashed transparent;
+            padding: 2px;
+            outline: none;
+        }
+
+        body.admin-mode .editable {
+            border: 1px dashed #ffc107;
+            background-color: rgba(255, 193, 7, 0.1);
+        }
+
+        body.admin-mode .edit-img-btn, 
+        body.admin-mode .delete-item-btn {
             display: block !important;
         }
 
         .edit-img-btn {
-            display: none; position: absolute; top: 10px; right: 10px;
-            background: #ffc107; border: none; padding: 5px 10px; font-weight: bold; cursor: pointer; border-radius: 4px;
+            display: none;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffc107;
+            border: none;
+            padding: 8px 12px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            z-index: 10;
+            color: #000;
         }
 
         .delete-item-btn {
-            display: none; position: absolute; top: -10px; right: -10px;
-            background: #dc3545; color: white; border: none; border-radius: 50%; width: 25px; height: 25px; cursor: pointer; font-weight: bold;
+            display: none;
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-weight: bold;
+            line-height: 1;
         }
 
+        /* --- RESPONSIVO --- */
         @media (max-width: 768px) {
             .navbar { flex-direction: column; gap: 1rem; }
-            .hero h1 { font-size: 2.5rem; }
+            .hero h1 { font-size: 2.2rem; }
+            body { padding-top: 120px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- MENÚ DE NAVEGACIÓN -->
     <header>
         <nav class="navbar">
             <div class="logo">The <span>Bunker</span></div>
@@ -198,228 +333,40 @@
         </nav>
     </header>
 
-    <!-- BARRA DE CONTROL DEL ADMINISTRADOR -->
     <div class="admin-controls" id="adminBar">
-        <strong>Modo Editor Activo</strong> | Haz clic en los textos para editarlos directamente. 
-        <button onclick="cambiarFondoHero()" class="admin-btn" style="color:black;">Cambiar Foto de Portada</button>
-        <button onclick="agregarPlato()" class="admin-btn" style="color:black;">+ Agregar Plato</button>
-        <button onclick="guardarCambios()" class="btn" style="padding: 5px 15px; margin-left:15px;">💾 Guardar Todo</button>
+        <strong style="color: #856404;">🛠️ MODO EDITOR ACTIVO</strong> | Haz clic sobre los textos para modificarlos.
+        <button onclick="cambiarFondoHero()" class="admin-btn" style="color:black; border-color:#000;">Foto Portada</button>
+        <button onclick="cambiarFotoHostal()" class="admin-btn" style="color:black; border-color:#000;">Foto Hostal</button>
+        <button onclick="agregarPlato()" class="admin-btn" style="color:black; border-color:#000;">+ Añadir Plato</button>
+        <button onclick="guardarCambios()" class="btn" style="padding: 6px 20px; margin-left:15px; background:#28a745; color:white;">💾 GUARDAR EN INTERNET</button>
     </div>
 
-    <!-- SECCIÓN DE BIENVENIDA (HERO) -->
-    <section id="inicio" class="hero" id="heroSection">
-        <h1 class="editable" contenteditable="false" id="txt-titulo-hero">Hostal & Restaurante The Bunker</h1>
-        <p class="editable" contenteditable="false" id="txt-subtitulo-hero">Tu refugio perfecto para disfrutar de la mejor gastronomía, buena música y un descanso inigualable.</p>
+    <section id="inicio" class="hero">
+        <h1 class="editable" contenteditable="false" id="txt-titulo_hero">Cargando...</h1>
+        <p class="editable" contenteditable="false" id="txt-subtitulo_hero">Cargando...</p>
         <div>
-            <!-- BOTÓN DE WHATSAPP (Configurable) -->
-            <a href="https://wa.me/50766667777?text=Hola!%20Quiero%20hacer%20una%20reserva" target="_blank" class="btn btn-wsp" id="lnk-wsp">💬 Reservar por WhatsApp</a>
-            <!-- BOTÓN DE GPS GOOGLE MAPS (Configurable) -->
-            <a href="https://maps.google.com/?q=Hostal+Restaurante+The+Bunker" target="_blank" class="btn btn-gps" id="lnk-gps">📍 Cómo llegar (GPS)</a>
+            <a href="#" target="_blank" class="btn btn-wsp" id="lnk-wsp">💬 WhatsApp</a>
+            <a href="#" target="_blank" class="btn btn-gps" id="lnk-gps">📍 Ver GPS (Cómo llegar)</a>
         </div>
     </section>
 
-    <!-- SECCIÓN RESTAURANTE Y MENÚ -->
     <section id="restaurante">
         <h2 class="section-title">Nuestro Restaurante</h2>
-        <div class="menu-container" id="menuContainer">
-            <!-- Los platos se cargan aquí por JavaScript -->
-        </div>
+        <div class="menu-container" id="menuContainer"></div>
     </section>
 
-    <!-- SECCIÓN HOSTAL -->
-    <section id="hostal" style="background-color: #eaeaea; max-width: 100%;">
-        <div style="max-width: 1200px; margin: 0 auto;">
+    <div class="hostal-wrapper">
+        <section id="hostal">
             <h2 class="section-title">El Hostal</h2>
             <div class="hostal-info">
                 <div class="hostal-img">
                     <button class="edit-img-btn" onclick="cambiarFotoHostal()">Cambiar Foto</button>
-                    <img id="img-hostal" src="https://images.unsplash.com/photo-155854877-bab0e564b8d5?auto=format&fit=crop&w=800&q=80" alt="Habitaciones">
+                    <img id="img-hostal" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Habitaciones">
                 </div>
                 <div class="hostal-text">
-                    <h3 class="editable" contenteditable="false" id="txt-titulo-hostal">Un descanso blindado</h3>
-                    <p class="editable" contenteditable="false" id="txt-desc-hostal">Contamos con habitaciones compartidas y privadas diseñadas con un estilo urbano e industrial, equipadas con todo lo necesario para viajeros.</p>
+                    <h3 class="editable" contenteditable="false" id="txt-titulo_hostal">Cargando...</h3>
+                    <p class="editable" contenteditable="false" id="txt-desc_hostal">Cargando...</p>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- SECCIÓN CONTACTO -->
-    <section id="contacto" class="bg-dark" style="max-width: 100%;">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <h2 class="section-title" style="color: white;">Contacto & Datos</h2>
-            <div class="contacto-grid">
-                <div class="info-box">
-                    <h3>📍 Dirección</h3>
-                    <p class="editable" contenteditable="false" id="txt-contacto-dir">Calle Falsa 123, Barrio Central</p>
-                    <p><small style="color:var(--color-secundario)">Link GPS actual:</small><br><span id="txt-link-gps" class="editable" contenteditable="false" style="font-size:11px; word-break:break-all;">https://maps.google.com/?q=Hostal+Restaurante+The+Bunker</span></p>
-                </div>
-                <div class="info-box">
-                    <h3>📞 Teléfono & WhatsApp</h3>
-                    <p class="editable" contenteditable="false" id="txt-contacto-tel">+507 6666-7777</p>
-                    <p><small style="color:var(--color-secundario)">Número WhatsApp (Sin espacios ni +):</small><br><span id="txt-num-wsp" class="editable" contenteditable="false">50766667777</span></p>
-                </div>
-                <div class="info-box">
-                    <h3>🕒 Horarios</h3>
-                    <p class="editable" contenteditable="false" id="txt-contacto-hora">Restaurante: Mar - Dom: 12:00 PM - 11:00 PM<br>Hostal: Abierto 24 horas</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2026 Hostal & Restaurante The Bunker. Todos los derechos reservados.</p>
-    </footer>
-
-    <!-- LOGICA DE EDICIÓN Y CONTRASEÑA -->
-    <script>
-        let adminMode = false;
-        
-        // Datos por defecto si el menú está vacío
-        const menuPorDefecto = [
-            {titulo: "Hamburguesa Bunker", precio: "$12.50", desc: "200g de carne, cheddar, tocino y salsa secreta."},
-            {titulo: "Costillas BBQ", precio: "$16.00", desc: "Costillas de cerdo tiernas ahumadas con papas rústicas."}
-        ];
-
-        // Cargar datos al iniciar la página
-        window.onload = function() {
-            if(localStorage.getItem('bunker_titulo_hero')) {
-                document.getElementById('txt-titulo-hero').innerText = localStorage.getItem('bunker_titulo_hero');
-                document.getElementById('txt-subtitulo-hero').innerText = localStorage.getItem('bunker_subtitulo_hero');
-                document.getElementById('txt-titulo-hostal').innerText = localStorage.getItem('bunker_titulo_hostal');
-                document.getElementById('txt-desc-hostal').innerText = localStorage.getItem('bunker_desc_hostal');
-                document.getElementById('txt-contacto-dir').innerText = localStorage.getItem('bunker_contacto_dir');
-                document.getElementById('txt-contacto-tel').innerText = localStorage.getItem('bunker_contacto_tel');
-                document.getElementById('txt-contacto-hora').innerHTML = localStorage.getItem('bunker_contacto_hora');
-                document.getElementById('txt-link-gps').innerText = localStorage.getItem('bunker_link_gps');
-                document.getElementById('txt-num-wsp').innerText = localStorage.getItem('bunker_num_wsp');
-                
-                document.getElementById('lnk-gps').href = localStorage.getItem('bunker_link_gps');
-                document.getElementById('lnk-wsp').href = "https://wa.me/" + localStorage.getItem('bunker_num_wsp') + "?text=Hola!%20Quiero%20hacer%20una%20reserva";
-            }
-            
-            if(localStorage.getItem('bunker_img_hero')) {
-                document.getElementById('inicio').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${localStorage.getItem('bunker_img_hero')}')`;
-            }
-            if(localStorage.getItem('bunker_img_hostal')) {
-                document.getElementById('img-hostal').src = localStorage.getItem('bunker_img_hostal');
-            }
-
-            renderMenu();
-        };
-
-        // Renderizar el menú de platos
-        function renderMenu() {
-            const container = document.getElementById('menuContainer');
-            container.innerHTML = "";
-            let platos = JSON.parse(localStorage.getItem('bunker_menu')) || menuPorDefecto;
-            
-            platos.forEach((plato, index) => {
-                container.innerHTML += `
-                    <div class="menu-item">
-                        <button class="delete-item-btn" onclick="eliminarPlato(${index})">X</button>
-                        <div class="menu-header">
-                            <span class="editable plato-tit" contenteditable="${adminMode}" id="p-tit-${index}">${plato.titulo}</span>
-                            <span class="price editable plato-pre" contenteditable="${adminMode}" id="p-pre-${index}">${plato.precio}</span>
-                        </div>
-                        <p class="editable plato-desc" contenteditable="${adminMode}" id="p-desc-${index}">${plato.desc}</p>
-                    </div>
-                `;
-            });
-        }
-
-        // Activar o desactivar modo admin con contraseña
-        function toggleAdmin() {
-            if(!adminMode) {
-                let pass = prompt("Introduce la contraseña de administrador:");
-                if(pass === "bunker123") {
-                    adminMode = true;
-                    document.body.classList.add('admin-mode');
-                    document.getElementById('adminBar').style.display = 'block';
-                    document.getElementById('loginBtn').innerText = "🔒 Salir Admin";
-                    
-                    // Hacer editables los campos de texto
-                    document.querySelectorAll('.editable').forEach(el => el.contentEditable = "true");
-                    renderMenu(); // Refrescar para activar edición en el menú
-                } else {
-                    alert("Contraseña incorrecta.");
-                }
-            } else {
-                adminMode = false;
-                document.body.classList.remove('admin-mode');
-                document.getElementById('adminBar').style.display = 'none';
-                document.getElementById('loginBtn').innerText = "🔑 Login Admin";
-                document.querySelectorAll('.editable').forEach(el => el.contentEditable = "false");
-                renderMenu();
-            }
-        }
-
-        // Agregar un nuevo plato vacío
-        function agregarPlato() {
-            let platos = JSON.parse(localStorage.getItem('bunker_menu')) || menuPorDefecto;
-            platos.push({titulo: "Nuevo Plato", precio: "$0.00", desc: "Descripción del nuevo plato."});
-            localStorage.setItem('bunker_menu', JSON.stringify(platos));
-            renderMenu();
-        }
-
-        // Eliminar plato
-        function eliminarPlato(index) {
-            let platos = JSON.parse(localStorage.getItem('bunker_menu')) || menuPorDefecto;
-            platos.splice(index, 1);
-            localStorage.setItem('bunker_menu', JSON.stringify(platos));
-            renderMenu();
-        }
-
-        // Cambiar fotos mediante enlaces de internet
-        function cambiarFondoHero() {
-            let url = prompt("Introduce la URL de la nueva imagen de portada (Link de internet):");
-            if(url) {
-                document.getElementById('inicio').style.backgroundImage = `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('${url}')`;
-                localStorage.setItem('bunker_img_hero', url);
-            }
-        }
-
-        function cambiarFotoHostal() {
-            let url = prompt("Introduce la URL de la nueva imagen del hostal (Link de internet):");
-            if(url) {
-                document.getElementById('img-hostal').src = url;
-                localStorage.setItem('bunker_img_hostal', url);
-            }
-        }
-
-        // Guardar todos los cambios realizados
-        function guardarCambios() {
-            // Guardar textos fijos
-            localStorage.setItem('bunker_titulo_hero', document.getElementById('txt-titulo-hero').innerText);
-            localStorage.setItem('bunker_subtitulo_hero', document.getElementById('txt-subtitulo-hero').innerText);
-            localStorage.setItem('bunker_titulo_hostal', document.getElementById('txt-titulo-hostal').innerText);
-            localStorage.setItem('bunker_desc_hostal', document.getElementById('txt-desc-hostal').innerText);
-            localStorage.setItem('bunker_contacto_dir', document.getElementById('txt-contacto-dir').innerText);
-            localStorage.setItem('bunker_contacto_tel', document.getElementById('txt-contacto-tel').innerText);
-            localStorage.setItem('bunker_contacto_hora', document.getElementById('txt-contacto-hora').innerHTML);
-            
-            // Guardar links técnicos (WhatsApp y GPS)
-            let gpsLink = document.getElementById('txt-link-gps').innerText.trim();
-            let wspNum = document.getElementById('txt-num-wsp').innerText.trim();
-            localStorage.setItem('bunker_link_gps', gpsLink);
-            localStorage.setItem('bunker_num_wsp', wspNum);
-            
-            document.getElementById('lnk-gps').href = gpsLink;
-            document.getElementById('lnk-wsp').href = "https://wa.me/" + wspNum + "?text=Hola!%20Quiero%20hacer%20una%20reserva";
-
-            // Guardar platos dinámicos
-            let platosGuardar = [];
-            let items = document.querySelectorAll('.menu-item');
-            items.forEach((item, index) => {
-                let t = document.getElementById(`p-tit-${index}`).innerText;
-                let p = document.getElementById(`p-pre-${index}`).innerText;
-                let d = document.getElementById(`p-desc-${index}`).innerText;
-                platosGuardar.push({titulo: t, precio: p, desc: d});
-            });
-            localStorage.setItem('bunker_menu', JSON.stringify(platosGuardar));
-
-            alert("¡Todos los cambios guardados con éxito!");
-            toggleAdmin(); // Cierra el modo admin al terminar
-        }
-    </script>
-</body>
-</html>
+        </section>
+    </div>

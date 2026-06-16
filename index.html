@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Bunker | Hostal & Restaurante</title>
     
+    <!-- Supabase CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
@@ -309,64 +310,48 @@
             font-weight: bold;
             line-height: 1;
         }
-
-        /* --- RESPONSIVO --- */
-        @media (max-width: 768px) {
-            .navbar { flex-direction: column; gap: 1rem; }
-            .hero h1 { font-size: 2.2rem; }
-            body { padding-top: 120px; }
-        }
     </style>
 </head>
 <body>
 
+    <!-- NAVEGACIÓN -->
     <header>
-        <nav class="navbar">
+        <div class="navbar">
             <div class="logo">The <span>Bunker</span></div>
             <ul class="nav-menu">
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#restaurante">Restaurante</a></li>
+                <li><a href="#restaurante">Menú</a></li>
                 <li><a href="#hostal">Hostal</a></li>
                 <li><a href="#contacto">Contacto</a></li>
-                <li><button class="admin-btn" id="loginBtn" onclick="toggleAdmin()">🔑 Login Admin</button></li>
+                <li><button class="admin-btn" id="toggleAdminBtn">Modo Admin</button></li>
             </ul>
-        </nav>
+        </div>
     </header>
 
-    <div class="admin-controls" id="adminBar">
-        <strong style="color: #856404;">🛠️ MODO EDITOR ACTIVO</strong> | Haz clic sobre los textos para modificarlos.
-        <button onclick="cambiarFondoHero()" class="admin-btn" style="color:black; border-color:#000;">Foto Portada</button>
-        <button onclick="cambiarFotoHostal()" class="admin-btn" style="color:black; border-color:#000;">Foto Hostal</button>
-        <button onclick="agregarPlato()" class="admin-btn" style="color:black; border-color:#000;">+ Añadir Plato</button>
-        <button onclick="guardarCambios()" class="btn" style="padding: 6px 20px; margin-left:15px; background:#28a745; color:white;">💾 GUARDAR EN INTERNET</button>
-    </div>
-
-    <section id="inicio" class="hero">
-        <h1 class="editable" contenteditable="false" id="txt-titulo_hero">Cargando...</h1>
-        <p class="editable" contenteditable="false" id="txt-subtitulo_hero">Cargando...</p>
+    <!-- PORTADA -->
+    <section class="hero" id="inicio">
+        <h1 class="editable" id="hero-title">The Bunker</h1>
+        <p class="editable" id="hero-desc">Hostal seguro y la mejor comida casera de la zona.</p>
         <div>
-            <a href="#" target="_blank" class="btn btn-wsp" id="lnk-wsp">💬 WhatsApp</a>
-            <a href="#" target="_blank" class="btn btn-gps" id="lnk-gps">📍 Ver GPS (Cómo llegar)</a>
+            <a href="#" class="btn btn-wsp" id="hero-wsp">WhatsApp</a>
+            <a href="#" class="btn btn-gps" id="hero-gps">Cómo llegar</a>
         </div>
     </section>
 
+    <!-- RESTAURANTE -->
     <section id="restaurante">
-        <h2 class="section-title">Nuestro Restaurante</h2>
-        <div class="menu-container" id="menuContainer"></div>
+        <h2 class="section-title">Nuestro Menú</h2>
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <button class="btn" id="add-menu-item" style="display: none; background: #28a745; color: white;">+ Agregar Platillo</button>
+        </div>
+        <div class="menu-container" id="menu-items-container">
+            <!-- Los elementos se cargan dinámicamente aquí -->
+        </div>
     </section>
 
-    <div class="hostal-wrapper">
-        <section id="hostal">
+    <!-- HOSTAL -->
+    <div class="hostal-wrapper" id="hostal">
+        <section>
             <h2 class="section-title">El Hostal</h2>
             <div class="hostal-info">
                 <div class="hostal-img">
-                    <button class="edit-img-btn" onclick="cambiarFotoHostal()">Cambiar Foto</button>
-                    <img id="img-hostal" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Habitaciones">
-                </div>
-                <div class="hostal-text">
-                    <h3 class="editable" contenteditable="false" id="txt-titulo_hostal">Cargando...</h3>
-                    <p class="editable" contenteditable="false" id="txt-desc_hostal">Cargando...</p>
-                </div>
-            </div>
-        </section>
-    </div>
+                    <button class="edit-img-btn" onclick="cambiarImagen('hostal-img-element')">Cambiar Foto</button>

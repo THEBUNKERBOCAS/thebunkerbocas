@@ -6,7 +6,7 @@
     <title>The Bunker | Hostal & Restaurante</title>
     
     <!-- Supabase CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://jsdelivr.net"></script>
 
     <style>
         /* --- PALETA DE COLORES Y VARIABLES --- */
@@ -16,6 +16,9 @@
             --color-fondo: #f4f4f4;
             --color-texto-oscuro: #333333;
             --color-texto-claro: #ffffff;
+            --color-peligro: #dc3545;
+            --color-exito: #28a745;
+            --color-alerta: #ffc107;
         }
 
         /* --- CONFIGURACIÓN GENERAL --- */
@@ -24,6 +27,10 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -70,7 +77,7 @@
             display: flex;
             list-style: none;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
         }
 
         .nav-menu li a {
@@ -95,7 +102,7 @@
             transition: 0.3s;
         }
 
-        /* --- SECCIÓN HERO (PORTADA) --- */
+        /* --- SECCIÓN HERO --- */
         .hero {
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), #1a1a1a;
             background-position: center;
@@ -142,6 +149,7 @@
 
         .btn-wsp { background-color: #25D366; color: white; }
         .btn-gps { background-color: #4285F4; color: white; }
+        
         .btn:hover {
             opacity: 0.9;
             transform: translateY(-2px);
@@ -180,8 +188,14 @@
         .menu-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             margin-bottom: 0.5rem;
             font-weight: bold;
+            gap: 10px;
+        }
+
+        .menu-header .item-nombre {
+            flex: 1;
         }
 
         .price {
@@ -189,9 +203,10 @@
             background-color: var(--color-principal);
             padding: 2px 8px;
             border-radius: 4px;
+            white-space: nowrap;
         }
 
-        /* --- CONTENEDORES DE ANCHO COMPLETO --- */
+        /* --- HOSTAL Y COMPONENTES --- */
         .hostal-wrapper {
             background-color: #eaeaea;
             width: 100%;
@@ -240,7 +255,6 @@
             margin-bottom: 1rem;
         }
 
-        /* --- FOOTER --- */
         footer {
             background-color: #0f0f0f;
             color: #777;
@@ -260,7 +274,7 @@
             left: 0;
             z-index: 2000;
             text-align: center;
-            border-top: 3px solid #ffc107;
+            border-top: 3px solid var(--color-alerta);
             box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
         }
 
@@ -268,10 +282,11 @@
             border: 1px dashed transparent;
             padding: 2px;
             outline: none;
+            transition: border 0.3s, background-color 0.3s;
         }
 
         body.admin-mode .editable {
-            border: 1px dashed #ffc107;
+            border: 1px dashed var(--color-alerta);
             background-color: rgba(255, 193, 7, 0.1);
         }
 
@@ -285,7 +300,7 @@
             position: absolute;
             top: 10px;
             right: 10px;
-            background: #ffc107;
+            background: var(--color-alerta);
             border: none;
             padding: 8px 12px;
             font-weight: bold;
@@ -300,7 +315,7 @@
             position: absolute;
             top: -10px;
             right: -10px;
-            background: #dc3545;
+            background: var(--color-peligro);
             color: white;
             border: none;
             border-radius: 50%;
@@ -309,14 +324,28 @@
             cursor: pointer;
             font-weight: bold;
             line-height: 1;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* --- RESPONSIVIDAD --- */
+        @media (max-width: 768px) {
+            body { padding-top: 120px; }
+            .navbar { flex-direction: column; gap: 10px; padding: 1rem; }
+            .nav-menu { flex-wrap: wrap; justify-content: center; gap: 5px; }
+            .hero h1 { font-size: 2.3rem; }
+            .hero p { font-size: 1rem; }
+            section { padding: 3rem 1rem; }
+            .section-title { font-size: 2rem; margin-bottom: 2rem; }
+            .admin-controls { font-size: 13px; padding: 10px 5px; }
+            .admin-controls .btn { display: block; margin: 8px auto 0 auto; }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVEGACIÓN -->
     <header>
-        <div class="navbar">
+        <nav class="navbar">
             <div class="logo">The <span>Bunker</span></div>
             <ul class="nav-menu">
                 <li><a href="#restaurante">Menú</a></li>
@@ -324,34 +353,9 @@
                 <li><a href="#contacto">Contacto</a></li>
                 <li><button class="admin-btn" id="toggleAdminBtn">Modo Admin</button></li>
             </ul>
-        </div>
+        </nav>
     </header>
 
-    <!-- PORTADA -->
-    <section class="hero" id="inicio">
-        <h1 class="editable" id="hero-title">The Bunker</h1>
-        <p class="editable" id="hero-desc">Hostal seguro y la mejor comida casera de la zona.</p>
-        <div>
-            <a href="#" class="btn btn-wsp" id="hero-wsp">WhatsApp</a>
-            <a href="#" class="btn btn-gps" id="hero-gps">Cómo llegar</a>
-        </div>
-    </section>
-
-    <!-- RESTAURANTE -->
-    <section id="restaurante">
-        <h2 class="section-title">Nuestro Menú</h2>
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <button class="btn" id="add-menu-item" style="display: none; background: #28a745; color: white;">+ Agregar Platillo</button>
-        </div>
-        <div class="menu-container" id="menu-items-container">
-            <!-- Los elementos se cargan dinámicamente aquí -->
-        </div>
-    </section>
-
-    <!-- HOSTAL -->
-    <div class="hostal-wrapper" id="hostal">
-        <section>
-            <h2 class="section-title">El Hostal</h2>
-            <div class="hostal-info">
-                <div class="hostal-img">
-                    <button class="edit-img-btn" onclick="cambiarImagen('hostal-img-element')">Cambiar Foto</button>
+    <main>
+        <section class="hero" id="inicio">
+            <h1 class="editable" id="hero-title">The Bunker</h1>
